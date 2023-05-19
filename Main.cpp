@@ -75,6 +75,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
     switch (msg)
     {
+ 
+   
     case WM_DESTROY:
         PostQuitMessage(0);  //ƒvƒƒOƒ‰ƒ€I—¹
         return 0;
