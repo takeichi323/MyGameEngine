@@ -34,8 +34,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
         WS_OVERLAPPEDWINDOW, //スタイル（普通のウィンドウ）
         CW_USEDEFAULT,       //表示位置左（おまかせ）
         CW_USEDEFAULT,       //表示位置上（おまかせ）
-        500,                 //ウィンドウ幅
-        800,                 //ウィンドウ高さ
+        800,                 //ウィンドウ幅
+        600,                 //ウィンドウ高さ
         NULL,                //親ウインドウ（なし）
         NULL,                //メニュー（なし）
         hInstance,           //インスタンス
