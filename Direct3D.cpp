@@ -1,3 +1,4 @@
+#include <d3dcompiler.h>
 #include "Direct3D.h"
 
 
@@ -10,6 +11,10 @@ namespace Direct3D
 	ID3D11DeviceContext* pContext;		//デバイスコンテキスト
 	IDXGISwapChain* pSwapChain;		//スワップチェイン
 	ID3D11RenderTargetView* pRenderTargetView;	//レンダーターゲットビュー
+
+    ID3D11VertexShader* pVertexShader = nullptr;	//頂点シェーダー
+    ID3D11PixelShader* pPixelShader = nullptr;		//ピクセルシェーダー
+    ID3D11InputLayout* pVertexLayout = nullptr;	//頂点インプットレイアウト
 
    
 
@@ -61,6 +66,17 @@ void Direct3D::Initialize(int winW, int winH, HWND hWnd)
         &level,					// 無事完成したDevice、Contextのレベルが返ってくる
         &pContext);				// 無事完成したContextのアドレスが返ってくる
 
+    ///////////////////////////レンダーターゲットビュー作成///////////////////////////////
+    //スワップチェーンからバックバッファを取得（バックバッファ ＝ レンダーターゲット）
+    ID3D11Texture2D* pBackBuffer;
+    pSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&pBackBuffer);
+
+    //レンダーターゲットビューを作成
+    pDevice->CreateRenderTargetView(pBackBuffer, NULL, &pRenderTargetView);
+
+    //一時的にバックバッファを取得しただけなので解放
+    pBackBuffer->Release();
+
     //ウィンドウサイズの計算
     RECT winRect = { 0, 0, winW, winH };
     AdjustWindowRect(&winRect, WS_OVERLAPPEDWINDOW, FALSE);
@@ -82,26 +98,50 @@ void Direct3D::Initialize(int winW, int winH, HWND hWnd)
     pContext->OMSetRenderTargets(1, &pRenderTargetView, nullptr);            // 描画先を設定
     pContext->RSSetViewports(1, &vp);
 
+    //シェーダー準備
+    InitShader();
 }
 
+//シェーダー準備
+
+void Direct3D::InitShader()
+{
+    // 頂点シェーダの作成（コンパイル）
+    ID3DBlob* pCompileVS = nullptr;
+    D3DCompileFromFile(L"Simple3D.hlsl", nullptr, nullptr, "VS", "vs_5_0", NULL, 0, &pCompileVS, NULL);
+    pDevice->CreateVertexShader(pCompileVS->GetBufferPointer(), pCompileVS->GetBufferSize(), NULL, &pVertexShader);
+
+
+    //頂点インプットレイアウト
+    D3D11_INPUT_ELEMENT_DESC layout[] = {
+    { "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0,  D3D11_INPUT_PER_VERTEX_DATA, 0 },	//位置
+
+    };
+
+    pDevice->CreateInputLayout(layout, 1, pCompileVS->GetBufferPointer(), pCompileVS->GetBufferSize(), &pVertexLayout);
+
+
+
+    pCompileVS->Release();
+
+    // ピクセルシェーダの作成（コンパイル）
+    ID3DBlob* pCompilePS = nullptr;
+    D3DCompileFromFile(L"Simple3D.hlsl", nullptr, nullptr, "PS", "ps_5_0", NULL, 0, &pCompilePS, NULL);
+    pDevice->CreatePixelShader(pCompilePS->GetBufferPointer(), pCompilePS->GetBufferSize(), NULL, &pPixelShader);
+    pCompilePS->Release();
+
+
+}
 
 //描画開始
 void Direct3D::BeginDraw()
 
 {  
-    ///////////////////////////レンダーターゲットビュー作成///////////////////////////////
-    //スワップチェーンからバックバッファを取得（バックバッファ ＝ レンダーターゲット）
-    ID3D11Texture2D* pBackBuffer;
-    pSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&pBackBuffer);
-
-    //レンダーターゲットビューを作成
-    pDevice->CreateRenderTargetView(pBackBuffer, NULL, &pRenderTargetView);
-
-    //一時的にバックバッファを取得しただけなので解放
-    pBackBuffer->Release();
-
-    
-
+    //背景の色
+    float clearColor[4] = { 0.0f, 0.5f, 0.5f, 1.0f };//R,G,B,A
+    //画面をクリア
+    pContext->ClearRenderTargetView(pRenderTargetView, clearColor);
+ 
     
 }
 
@@ -114,15 +154,11 @@ void Direct3D::BeginDraw()
 void Direct3D::EndDraw()
 
 {
-    //背景の色
-    float clearColor[4] = { 0.0f, 0.5f, 0.5f, 1.0f };//R,G,B,A
+    
 
-    //画面をクリア
-    pContext->ClearRenderTargetView(pRenderTargetView, clearColor);
-
+    
     //スワップ（バックバッファを表に表示する）
     pSwapChain->Present(0, 0);
-
 
 }
 
