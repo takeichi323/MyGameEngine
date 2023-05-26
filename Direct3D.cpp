@@ -26,7 +26,6 @@ namespace Direct3D
 void Direct3D::Initialize(int winW, int winH, HWND hWnd)
 
 {
-
     ///////////////////////////いろいろ準備するための設定///////////////////////////////
     //いろいろな設定項目をまとめた構造体
     DXGI_SWAP_CHAIN_DESC scDesc;
@@ -77,11 +76,7 @@ void Direct3D::Initialize(int winW, int winH, HWND hWnd)
     //一時的にバックバッファを取得しただけなので解放
     pBackBuffer->Release();
 
-    //ウィンドウサイズの計算
-    RECT winRect = { 0, 0, winW, winH };
-    AdjustWindowRect(&winRect, WS_OVERLAPPEDWINDOW, FALSE);
-    int winW = winRect.right - winRect.left;     //ウィンドウ幅
-    int winH = winRect.bottom - winRect.top;     //ウィンドウ高さ
+    
 
     ///////////////////////////ビューポート（描画範囲）設定///////////////////////////////
     //レンダリング結果を表示する範囲
@@ -99,10 +94,10 @@ void Direct3D::Initialize(int winW, int winH, HWND hWnd)
     pContext->RSSetViewports(1, &vp);
 
     //シェーダー準備
-    InitShader();
+   InitShader();
 }
 
-//シェーダー準備
+
 
 void Direct3D::InitShader()
 {

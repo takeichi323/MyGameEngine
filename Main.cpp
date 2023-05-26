@@ -40,7 +40,25 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
     int winW = winRect.right - winRect.left;     //ウィンドウ幅
     int winH = winRect.bottom - winRect.top;     //ウィンドウ高さ
 
+    //ウィンドウを作成
+    HWND hWnd = CreateWindow(
+        WIN_CLASS_NAME,         //ウィンドウクラス名
+        "サンプルゲーム",     //タイトルバーに表示する内容
+        WS_OVERLAPPEDWINDOW, //スタイル（普通のウィンドウ）
+        CW_USEDEFAULT,       //表示位置左（おまかせ）
+        CW_USEDEFAULT,       //表示位置上（おまかせ）
+        800,                 //ウィンドウ幅
+        600,                 //ウィンドウ高さ
+        NULL,                //親ウインドウ（なし）
+        NULL,                //メニュー（なし）
+        hInstance,           //インスタンス
+        NULL                 //パラメータ（なし）
+    );
+
+    //ウィンドウを表示
+    ShowWindow(hWnd, nCmdShow);
     
+    Direct3D::Initialize(WINDOW_WIDTH, WINDOW_HEIGHT, hWnd);
     
 
     //メッセージループ（何か起きるのを待つ）
