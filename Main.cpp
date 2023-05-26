@@ -61,7 +61,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
             //ƒQ[ƒ€‚Ìˆ—
           
 
-            //‰æ–Ê‚ğƒNƒŠƒA
+            
             Direct3D::BeginDraw();
 
             //•`‰æˆ—
