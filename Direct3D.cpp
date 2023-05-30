@@ -5,7 +5,6 @@
 
 //変数
 namespace Direct3D
-
 {
 	ID3D11Device* pDevice;		//デバイス
 	ID3D11DeviceContext* pContext;		//デバイスコンテキスト
@@ -15,16 +14,13 @@ namespace Direct3D
     ID3D11VertexShader* pVertexShader = nullptr;	//頂点シェーダー
     ID3D11PixelShader* pPixelShader = nullptr;		//ピクセルシェーダー
     ID3D11InputLayout* pVertexLayout = nullptr;	//頂点インプットレイアウト
-
-   
-
+    ID3D11RasterizerState* pRasterizerState = nullptr;	//ラスタライザー
 }
 
 
 
 //初期化
 void Direct3D::Initialize(int winW, int winH, HWND hWnd)
-
 {
     ///////////////////////////いろいろ準備するための設定///////////////////////////////
     //いろいろな設定項目をまとめた構造体
@@ -76,8 +72,6 @@ void Direct3D::Initialize(int winW, int winH, HWND hWnd)
     //一時的にバックバッファを取得しただけなので解放
     pBackBuffer->Release();
 
-    
-
     ///////////////////////////ビューポート（描画範囲）設定///////////////////////////////
     //レンダリング結果を表示する範囲
     D3D11_VIEWPORT vp;
@@ -89,7 +83,7 @@ void Direct3D::Initialize(int winW, int winH, HWND hWnd)
     vp.TopLeftY = 0;	//上
     
     // データを画面に描画するための一通りの設定（パイプライン）
-        pContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);  // データの入力種類を指定
+    pContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);  // データの入力種類を指定
     pContext->OMSetRenderTargets(1, &pRenderTargetView, nullptr);            // 描画先を設定
     pContext->RSSetViewports(1, &vp);
 
@@ -112,11 +106,7 @@ void Direct3D::InitShader()
     { "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0,  D3D11_INPUT_PER_VERTEX_DATA, 0 },	//位置
 
     };
-
     pDevice->CreateInputLayout(layout, 1, pCompileVS->GetBufferPointer(), pCompileVS->GetBufferSize(), &pVertexLayout);
-
-
-
     pCompileVS->Release();
 
     // ピクセルシェーダの作成（コンパイル）
@@ -125,48 +115,48 @@ void Direct3D::InitShader()
     pDevice->CreatePixelShader(pCompilePS->GetBufferPointer(), pCompilePS->GetBufferSize(), NULL, &pPixelShader);
     pCompilePS->Release();
 
+    // ラスタライザ作成
+    D3D11_RASTERIZER_DESC rdc = {};
+    rdc.CullMode = D3D11_CULL_BACK;
+    rdc.FillMode = D3D11_FILL_SOLID;
+    rdc.FrontCounterClockwise = FALSE;
+    pDevice->CreateRasterizerState(&rdc, &pRasterizerState);
 
+    //それぞれをデバイスコンテキストにセット
+    pContext->VSSetShader(pVertexShader, NULL, 0);	//頂点シェーダー
+    pContext->PSSetShader(pPixelShader, NULL, 0);	//ピクセルシェーダー
+    pContext->IASetInputLayout(pVertexLayout);	//頂点インプットレイアウト
+    pContext->RSSetState(pRasterizerState);		//ラスタライザー
 }
 
 //描画開始
 void Direct3D::BeginDraw()
-
 {  
     //背景の色
     float clearColor[4] = { 0.0f, 0.5f, 0.5f, 1.0f };//R,G,B,A
     //画面をクリア
     pContext->ClearRenderTargetView(pRenderTargetView, clearColor);
- 
-    
 }
-
-
-
-
-
 
 //描画終了
 void Direct3D::EndDraw()
-
 {
-    
-
-    
     //スワップ（バックバッファを表に表示する）
     pSwapChain->Present(0, 0);
-
 }
 
 
 //解放処理
 void Direct3D::Release()
-
 {
     //解放処理
+    pRasterizerState->Release();
+    pVertexLayout->Release();
+    pPixelShader->Release();
+    pVertexShader->Release();
+
     pRenderTargetView->Release();
     pSwapChain->Release();
     pContext->Release();
     pDevice->Release();
-   
-
 }
