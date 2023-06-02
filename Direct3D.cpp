@@ -63,6 +63,7 @@ HRESULT Direct3D::Initialize(int winW, int winH, HWND hWnd)
         &pContext);				// 無事完成したContextのアドレスが返ってくる
     if (FAILED(hr))
     {
+        MessageBox(nullptr, "D3D11CreateDeviceAndSwapChainに失敗しました", "エラー", MB_OK);
         //エラー処理
         return hr;
     }
@@ -73,6 +74,7 @@ HRESULT Direct3D::Initialize(int winW, int winH, HWND hWnd)
    hr= pSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&pBackBuffer);
     if (FAILED(hr))
     {
+        MessageBox(nullptr, "スワップチェーンからバックバッファを取得に失敗しました", "エラー", MB_OK);
         //エラー処理
         return hr;
     }
