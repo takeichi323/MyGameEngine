@@ -101,7 +101,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
             Direct3D::BeginDraw();
 
             pQuad->Draw();
-            pQuad->Release();
+            //pQuad->Release();
 
             
             //ï`âÊèàóù
@@ -110,6 +110,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 
         }
     }
+    SAFE_RELEASE(pQuad);
     SAFE_DELETE(pQuad);
     Direct3D::Release();
 	return 0;
