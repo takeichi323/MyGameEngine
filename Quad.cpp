@@ -39,6 +39,7 @@ HRESULT  Quad::Initialize()
 	hr=Direct3D::pDevice->CreateBuffer(&bd_vertex, &data_vertex, &pVertexBuffer_);
 	if (FAILED(hr))
 	{
+		MessageBox(nullptr, "CreateBufferの初期化に失敗しました", "エラー", MB_OK);
 		//エラー処理
 		return hr;
 	}
@@ -64,6 +65,7 @@ HRESULT  Quad::Initialize()
 	hr=Direct3D::pDevice->CreateBuffer(&bd, &InitData, &pIndexBuffer_);
 	if (FAILED(hr))
 	{
+		MessageBox(nullptr, "CreateBufferの初期化に失敗しました", "エラー", MB_OK);
 		return hr;
 	}
 
@@ -81,6 +83,7 @@ HRESULT  Quad::Initialize()
 	hr=Direct3D::pDevice->CreateBuffer(&cb, nullptr, &pConstantBuffer_);
 	if (FAILED(hr))
 	{
+		MessageBox(nullptr, "コンスタントバッファの作成に失敗しました", "エラー", MB_OK);
 		return hr;
 	}
 	return S_OK;

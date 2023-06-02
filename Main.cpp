@@ -23,6 +23,7 @@ Quad* pQuad;
 //エントリーポイント
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nCmdShow)
 {
+   
 	//ウィンドウクラス（設計図）を作成
     WNDCLASSEX wc;
     wc.cbSize = sizeof(WNDCLASSEX);             //この構造体のサイズ
@@ -64,11 +65,20 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 
     //ウィンドウを表示
     ShowWindow(hWnd, nCmdShow);
-    
-    Direct3D::Initialize(WINDOW_WIDTH, WINDOW_HEIGHT, hWnd);
+
+    HRESULT hr;//ここから下はhr使える
+    hr=Direct3D::Initialize(WINDOW_WIDTH, WINDOW_HEIGHT, hWnd);
+    if (FAILED(hr))
+    {
+        PostQuitMessage(0);
+    }
 
     pQuad = new Quad;
-    pQuad->Initialize();
+    hr=pQuad->Initialize();
+    if (FAILED(hr))
+    {
+        PostQuitMessage(0);
+    }
     
 
     //メッセージループ（何か起きるのを待つ）
