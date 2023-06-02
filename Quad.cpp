@@ -12,8 +12,9 @@ Quad::~Quad()
 	Release();//SAFE_RELEASEシリーズに書き換えよう
 }
 
-void Quad::Initialize()
+HRESULT  Quad::Initialize()
 {
+	HRESULT hr;
 	// 頂点情報
 	XMVECTOR vertices[] =
 	{
@@ -34,7 +35,13 @@ void Quad::Initialize()
 	bd_vertex.StructureByteStride = 0;
 	D3D11_SUBRESOURCE_DATA data_vertex;
 	data_vertex.pSysMem = vertices;
-	Direct3D::pDevice->CreateBuffer(&bd_vertex, &data_vertex, &pVertexBuffer_);
+
+	hr=Direct3D::pDevice->CreateBuffer(&bd_vertex, &data_vertex, &pVertexBuffer_);
+	if (FAILED(hr))
+	{
+		//エラー処理
+		return hr;
+	}
 
 
 
@@ -53,7 +60,12 @@ void Quad::Initialize()
 	InitData.pSysMem = index;
 	InitData.SysMemPitch = 0;
 	InitData.SysMemSlicePitch = 0;
-	Direct3D::pDevice->CreateBuffer(&bd, &InitData, &pIndexBuffer_);
+
+	hr=Direct3D::pDevice->CreateBuffer(&bd, &InitData, &pIndexBuffer_);
+	if (FAILED(hr))
+	{
+		return hr;
+	}
 
 
 	// コンスタントバッファ作成
@@ -66,7 +78,12 @@ void Quad::Initialize()
 	cb.StructureByteStride = 0;
 
 	// コンスタントバッファの作成
-	Direct3D::pDevice->CreateBuffer(&cb, nullptr, &pConstantBuffer_);
+	hr=Direct3D::pDevice->CreateBuffer(&cb, nullptr, &pConstantBuffer_);
+	if (FAILED(hr))
+	{
+		return hr;
+	}
+	return S_OK;
 }
 
 void Quad::Draw()
