@@ -1,4 +1,5 @@
 #include "Quad.h"
+#include "Camera.h"
 
 
 Quad::Quad():
