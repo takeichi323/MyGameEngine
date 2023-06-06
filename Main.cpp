@@ -3,6 +3,7 @@
 #include "Direct3D.h"
 
 #include "Quad.h"
+#include "Camera.h"
 
 
 
@@ -66,6 +67,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
     //ウィンドウを表示
     ShowWindow(hWnd, nCmdShow);
 
+    
+
     HRESULT hr;//ここから下はhr使える
     hr=Direct3D::Initialize(WINDOW_WIDTH, WINDOW_HEIGHT, hWnd);
     if (FAILED(hr))
@@ -99,6 +102,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
             
             //ゲームの処理
             Direct3D::BeginDraw();
+
+            Camera::Update();
 
             pQuad->Draw();
             //pQuad->Release();
