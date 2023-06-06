@@ -77,6 +77,9 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
     }
 
     Camera::Initialize();//ƒJƒƒ‰‰Šú‰»
+    
+   
+
 
     pQuad = new Quad;
     hr=pQuad->Initialize();
@@ -105,9 +108,14 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
             //ƒQ[ƒ€‚Ìˆ—
             Direct3D::BeginDraw();
 
-           
-
-            pQuad->Draw();
+            static int a = 0;
+            a += 1;
+            XMMATRIX matR = XMMatrixRotationZ(XMConvertToRadians(a));
+            //XMMATRIX matT=XMMatrixTranslation(0, 0, 4);
+            //XMMATRIX matT = XMMatrixTranslation(4, 0, 0);
+           // XMMATRIX matS = XMMatrixScaling(1, 3, 1);//Šg¬
+            XMMATRIX matST = matR;
+            pQuad->Draw(matST);
             //pQuad->Release();
 
             
