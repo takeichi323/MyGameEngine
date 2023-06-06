@@ -76,7 +76,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
         PostQuitMessage(0);
     }
 
-    Camera::Initialize();
+    Camera::Initialize();//ƒJƒƒ‰‰Šú‰»
 
     pQuad = new Quad;
     hr=pQuad->Initialize();
