@@ -40,11 +40,10 @@ void Camera::SetTarget(XMVECTOR target)
 //ビュー行列を取得
 XMMATRIX Camera::GetViewMatrix()
 {
-
+	return viewMatrix_;
 }
-
 //プロジェクション行列を取得
 XMMATRIX Camera::GetProjectionMatrix()
 {
-
+	return  projMatrix_;
 }
