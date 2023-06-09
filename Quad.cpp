@@ -91,8 +91,8 @@ HRESULT  Quad::Initialize()
 		MessageBox(nullptr, "コンスタントバッファの作成に失敗しました", "エラー", MB_OK);
 		return hr;
 	}
-	pTexture_ = new Texture();
-	pTexture_->Load("Assets\\Dice.png");
+	pTexture_ = new Texture;
+	pTexture_->Load("Assets\\dice.png");
 
 	return S_OK;
 }
@@ -109,13 +109,8 @@ void Quad::Draw(XMMATRIX& worldMatrix)
 	memcpy_s(pdata.pData, pdata.RowPitch, (void*)(&cb), sizeof(cb));	// データを値を送る
 
 	ID3D11SamplerState* pSampler = pTexture_->GetSampler();
-
 	Direct3D::pContext_->PSSetSamplers(0, 1, &pSampler);
-
-
-
 	ID3D11ShaderResourceView* pSRV = pTexture_->GetSRV();
-
 	Direct3D::pContext_->PSSetShaderResources(0, 1, &pSRV);
 
 	Direct3D::pContext_->Unmap(pConstantBuffer_, 0);	//再開
@@ -140,6 +135,9 @@ void Quad::Draw(XMMATRIX& worldMatrix)
 
 void Quad::Release()
 {
+	pTexture_->Release();
+	SAFE_DELETE(pTexture_);
+
 	SAFE_RELEASE(pConstantBuffer_);
 	SAFE_RELEASE(pIndexBuffer_);
 	SAFE_RELEASE(pVertexBuffer_);
