@@ -8,10 +8,10 @@ Dice::~Dice()
 {
 }
 
-HRESULT Dice::Initialize()
-{
-    
-}
+//HRESULT Dice::Initialize()
+//{
+//    
+//}
 
 void Dice::Draw(XMMATRIX&)
 {
