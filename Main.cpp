@@ -4,7 +4,7 @@
 
 #include "Quad.h"
 #include "Camera.h"
-#include "Dice.h"
+#include "Quad.h"
 
 
 
@@ -20,7 +20,7 @@ const int WINDOW_HEIGHT = 600; //ウィンドウの高さ
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 //ポインタ
-Dice*pDice;
+Quad*pQuad;
 
 //エントリーポイント
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nCmdShow)
@@ -82,8 +82,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
    
 
 
-   pDice = new Dice;
-    hr=pDice->Initialize();
+   pQuad = new Quad;
+    hr=pQuad->Initialize();
     if (FAILED(hr))
     {
         PostQuitMessage(0);
@@ -116,7 +116,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
             //XMMATRIX matT = XMMatrixTranslation(4, 0, 0);
            // XMMATRIX matS = XMMatrixScaling(1, 3, 1);//拡小
             XMMATRIX matST = matR;
-           pDice->Draw(matST);
+           pQuad->Draw(matST);
             //pCamera->Release();
 
             
@@ -126,8 +126,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 
         }
     }
-    SAFE_RELEASE(pDice);
-    SAFE_DELETE(pDice);
+    SAFE_RELEASE(pQuad);
+    SAFE_DELETE(pQuad);
     Direct3D::Release();
 	return 0;
 }
