@@ -47,7 +47,7 @@ HRESULT  Quad::Initialize()
 		{XMVectorSet(1.0f,  1.0f, 0.0f, 0.0f),  },	// 四角形の頂点（右下）
 		{XMVectorSet(-1.0f,  1.0f, 0.0f, 0.0f),},  // 四角形の頂点（左下）
 
-		//sita
+		//下
 		{XMVectorSet(-1.0f, -1.0f, -2.0f, 0.0f), },	// 四角形の頂点（左上）
 		{XMVectorSet(1.0f, -1.0f, -2.0f, 0.0f), },	// 四角形の頂点（右上）
 		{XMVectorSet(1.0f, -1.0f, 0.0f, 0.0f),  },	// 四角形の頂点（右下）
