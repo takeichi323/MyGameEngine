@@ -55,7 +55,7 @@ HRESULT  Quad::Initialize()
 
         //後ろ
 		{XMVectorSet(-1.0f,  1.0f, 2.0f, 0.0f), },	// 四角形の頂点（左上）
-		{XMVectorSet(1.0f,  1.0f, 2.0f, 0.0f), },	// 四角形の頂点（右上）
+		{XMVectorSet(-1.0f,  1.0f, 2.0f, 0.0f), },	// 四角形の頂点（右上）
 		{XMVectorSet(1.0f, -1.0f, 2.0f, 0.0f),  },	// 四角形の頂点（右下）
 		{XMVectorSet(-1.0f, -1.0f, 2.0f, 0.0f),},  // 四角形の頂点（左下）
 
@@ -168,7 +168,7 @@ void Quad::Draw(XMMATRIX& worldMatrix)
 	Direct3D::pContext_->VSSetConstantBuffers(0, 1, &pConstantBuffer_);	//頂点シェーダー用	
 	Direct3D::pContext_->PSSetConstantBuffers(0, 1, &pConstantBuffer_);	//ピクセルシェーダー用
 
-	Direct3D::pContext_->DrawIndexed(6, 0, 0);
+	Direct3D::pContext_->DrawIndexed(36, 0, 0);//
 
 }
 
