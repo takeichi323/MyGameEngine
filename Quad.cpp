@@ -23,41 +23,41 @@ HRESULT  Quad::Initialize()
 	// 頂点情報
 	VERTEX vertices[] =
 	{   
-		//正面
-		{XMVectorSet(-1.0f,  1.0f, 0.0f, 0.0f),/*XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f)*/ },	// 四角形の頂点（左上）
-		{XMVectorSet(1.0f,  1.0f, 0.0f, 0.0f), /*XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f)*/ },	// 四角形の頂点（右上）
-		{XMVectorSet(1.0f, -1.0f, 0.0f, 0.0f), /*XMVectorSet(1.0f, 1.0f, 0.0f, 0.0f)*/ },	// 四角形の頂点（右下）
-		{XMVectorSet(-1.0f, -1.0f, 0.0f, 0.0f),/*XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f)*/ },	// 四角形の頂点（左下）	
+		//正面  1
+		{XMVectorSet(-1.0f,  1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f)},	// 四角形の頂点（左上）
+		{XMVectorSet(1.0f,  1.0f, 0.0f, 0.0f), XMVectorSet(0.25f, 0.0f, 0.0f, 0.0f) },	// 四角形の頂点（右上）
+		{XMVectorSet(1.0f, -1.0f, 0.0f, 0.0f), XMVectorSet(0.25f, 0.5f, 0.0f, 0.0f) },	// 四角形の頂点（右下）
+		{XMVectorSet(-1.0f, -1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 0.5f, 0.0f, 0.0f) },	// 四角形の頂点（左下）	
 
-		//右面
-		{XMVectorSet(1.0f,  1.0f, 0.0f, 0.0f), },	// 四角形の頂点（左上）
-		{XMVectorSet(1.0f,  1.0f, 2.0f, 0.0f), },	// 四角形の頂点（右上）
-		{XMVectorSet(1.0f, -1.0f, 2.0f, 0.0f),  },	// 四角形の頂点（右下）
-		{XMVectorSet(1.0f, -1.0f, 0.0f, 0.0f),},  // 四角形の頂点（左下）
+		//右面  2
+		{XMVectorSet(1.0f,  1.0f, 0.0f, 0.0f),XMVectorSet(0.25f, 0.0f, 0.0f, 0.0f) },	// 四角形の頂点（左上）
+		{XMVectorSet(1.0f,  1.0f, 2.0f, 0.0f),XMVectorSet(0.5f, 0.0f, 0.0f, 0.0f) },	// 四角形の頂点（右上）
+		{XMVectorSet(1.0f, -1.0f, 2.0f, 0.0f), XMVectorSet(0.5f, 0.5f, 0.0f, 0.0f) },	// 四角形の頂点（右下）
+		{XMVectorSet(1.0f, -1.0f, 0.0f, 0.0f),XMVectorSet(0.25f, 0.5f, 0.0f, 0.0f)},  // 四角形の頂点（左下）
 
-		//左面
-		{XMVectorSet(-1.0f,  1.0f, 2.0f, 0.0f), },	// 四角形の頂点（左上）
-		{XMVectorSet(-1.0f,  1.0f, 0.0f, 0.0f), },	// 四角形の頂点（右上）
-		{XMVectorSet(-1.0f, -1.0f, 0.0f, 0.0f),  },	// 四角形の頂点（右下）
-		{XMVectorSet(-1.0f, -1.0f, 2.0f, 0.0f),},  // 四角形の頂点（左下）
+		//左面   5
+		{XMVectorSet(-1.0f,  1.0f, 2.0f, 0.0f),XMVectorSet(0.0f, 0.5f, 0.0f, 0.0f) },	// 四角形の頂点（左上）
+		{XMVectorSet(-1.0f,  1.0f, 0.0f, 0.0f),XMVectorSet(0.25f, 0.5f, 0.0f, 0.0f) },	// 四角形の頂点（右上）
+		{XMVectorSet(-1.0f, -1.0f, 0.0f, 0.0f),XMVectorSet(0.25f, 1.0f, 0.0f, 0.0f)  },	// 四角形の頂点（右下）
+		{XMVectorSet(-1.0f, -1.0f, 2.0f, 0.0f),XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f)},  // 四角形の頂点（左下）
 
-		//上
-		{XMVectorSet(-1.0f,  1.0f, 2.0f, 0.0f), },	// 四角形の頂点（左上）
-		{XMVectorSet(1.0f,  1.0f, 2.0f, 0.0f), },	// 四角形の頂点（右上）
-		{XMVectorSet(1.0f,  1.0f, 0.0f, 0.0f),  },	// 四角形の頂点（右下）
-		{XMVectorSet(-1.0f,  1.0f, 0.0f, 0.0f),},  // 四角形の頂点（左下）
+		//上    4
+		{XMVectorSet(-1.0f,  1.0f, 2.0f, 0.0f),XMVectorSet(0.75f, 0.0f, 0.0f, 0.0f) },	// 四角形の頂点（左上）
+		{XMVectorSet(1.0f,  1.0f, 2.0f, 0.0f),XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f) },	// 四角形の頂点（右上）
+		{XMVectorSet(1.0f,  1.0f, 0.0f, 0.0f),XMVectorSet(1.0f, 0.5f, 0.0f, 0.0f)  },	// 四角形の頂点（右下）
+		{XMVectorSet(-1.0f,  1.0f, 0.0f, 0.0f),XMVectorSet(0.75f, 0.5f, 0.0f, 0.0f)},  // 四角形の頂点（左下）
 
-		//下
-		{XMVectorSet(-1.0f, -1.0f, -2.0f, 0.0f), },	// 四角形の頂点（左上）
-		{XMVectorSet(1.0f, -1.0f, -2.0f, 0.0f), },	// 四角形の頂点（右上）
-		{XMVectorSet(1.0f, -1.0f, 0.0f, 0.0f),  },	// 四角形の頂点（右下）
-		{XMVectorSet(-1.0f,  1.0f, 0.0f, 0.0f),},  // 四角形の頂点（左下）
+		//下  3
+		{XMVectorSet(-1.0f, -1.0f, 2.0f, 0.0f),XMVectorSet(0.5f, 0.0f, 0.0f, 0.0f) },	// 四角形の頂点（左上）
+		{XMVectorSet(1.0f, -1.0f, 2.0f, 0.0f),XMVectorSet(0.75f, 0.0f, 0.0f, 0.0f) },	// 四角形の頂点（右上）
+		{XMVectorSet(1.0f, -1.0f, 0.0f, 0.0f), XMVectorSet(0.75f, 0.5f, 0.0f, 0.0f) },	// 四角形の頂点（右下）
+		{XMVectorSet(-1.0f, -1.0f, 0.0f, 0.0f),XMVectorSet(0.5f, 0.5f, 0.0f, 0.0f)},  // 四角形の頂点（左下）
 
-        //後ろ
-		{XMVectorSet(-1.0f,  1.0f, 2.0f, 0.0f), },	// 四角形の頂点（左上）
-		{XMVectorSet(-1.0f,  1.0f, 2.0f, 0.0f), },	// 四角形の頂点（右上）
-		{XMVectorSet(1.0f, -1.0f, 2.0f, 0.0f),  },	// 四角形の頂点（右下）
-		{XMVectorSet(-1.0f, -1.0f, 2.0f, 0.0f),},  // 四角形の頂点（左下）
+        //後ろ  6
+		{XMVectorSet(-1.0f,  1.0f, 2.0f, 0.0f),XMVectorSet(0.25f, 0.5f, 0.0f, 0.0f) },	// 四角形の頂点（左上）
+		{XMVectorSet(1.0f,  1.0f, 2.0f, 0.0f), XMVectorSet(0.5f, 0.5f, 0.0f, 0.0f)},	// 四角形の頂点（右上）
+		{XMVectorSet(1.0f, -1.0f, 2.0f, 0.0f), XMVectorSet(0.5f, 1.0f, 0.0f, 0.0f) },	// 四角形の頂点（右下）
+		{XMVectorSet(-1.0f, -1.0f, 2.0f, 0.0f),XMVectorSet(0.25f, 1.0f, 0.0f, 0.0f)},  // 四角形の頂点（左下）
 
 
 	};
