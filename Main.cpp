@@ -111,13 +111,21 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
             Direct3D::BeginDraw();
 
             static float a = 0;
-            a +=0.01;
-            XMMATRIX matR = XMMatrixRotationY(XMConvertToRadians(a));
-            //XMMATRIX matT=XMMatrixTranslation(0, 0, 4);
-            //XMMATRIX matT = XMMatrixTranslation(4, 0, 0);
+            a +=0.02;
+
+            static float b = 0;
+            b += 0.01;
+            
+            XMMATRIX matH = XMMatrixRotationY(XMConvertToRadians(b));
+            XMMATRIX matR = XMMatrixRotationZ(XMConvertToRadians(a));
+           /* XMMATRIX matT = XMMatrixRotationX(XMConvertToRadians(b));*/
+            
+            //XMMATRIX matW = XMMatrixTranslation(4, 0, 0);
            // XMMATRIX matS = XMMatrixScaling(1, 3, 1);//Šg¬
-            XMMATRIX matST = matR;
+            XMMATRIX matST = matR*matH;
            pDice->Draw(matST);
+           
+           
             //pCamera->Release();
 
             
