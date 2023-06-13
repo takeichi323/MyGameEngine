@@ -169,7 +169,7 @@
 //	Direct3D::pContext_->PSSetConstantBuffers(0, 1, &pConstantBuffer_);	//ピクセルシェーダー用
 //
 //	
-//	Direct3D::pContext_->DrawIndexed(36, 0, 0);//数書いてる
+//	Direct3D::pContext_->DrawIndexed(6, 0, 0);//数書いてる
 //
 //}
 //
