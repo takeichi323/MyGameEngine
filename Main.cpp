@@ -2,10 +2,12 @@
 #include <Windows.h>
 #include "Direct3D.h"
 
-#include "Quad.h"
+#include "Dice.h"
 #include "Camera.h"
-#include "Quad.h"
-#include "Quad.h"
+#include "Dice.h"
+#include "Dice.h"
+#include "Dice.h"
+
 
 
 
@@ -21,7 +23,7 @@ const int WINDOW_HEIGHT = 600; //ウィンドウの高さ
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 //ポインタ
-Quad*pQuad;
+Dice*pDice;
 
 //エントリーポイント
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nCmdShow)
@@ -83,8 +85,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
    
 
 
-   pQuad = new Quad;
-    hr=pQuad->Initialize();
+   pDice = new Dice;
+    hr=pDice->Initialize();
     if (FAILED(hr))
     {
         PostQuitMessage(0);
@@ -111,20 +113,20 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
             Direct3D::BeginDraw();
 
             static float a = 0;
-            a =0.02;
+            a +=0.1;
 
             static float b = 0;
-            b = 0.01;
+            b += 0.01;
             
-            XMMATRIX matH = XMMatrixRotationY(XMConvertToRadians(b));
-            XMMATRIX matR = XMMatrixRotationZ(XMConvertToRadians(a));
+            XMMATRIX matH = XMMatrixRotationZ(XMConvertToRadians(b));
+            XMMATRIX matR = XMMatrixRotationY(XMConvertToRadians(a));
            /* XMMATRIX matT = XMMatrixRotationX(XMConvertToRadians(b));*/
             
             //XMMATRIX matW = XMMatrixTranslation(4, 0, 0);
            // XMMATRIX matS = XMMatrixScaling(1, 3, 1);//拡小
             XMMATRIX matST = matR*matH;
-           pQuad->Draw(matST);
-           
+           pDice->Draw(matST);
+           pDice->Draw(matST);
            
             //pCamera->Release();
 
@@ -135,8 +137,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 
         }
     }
-    SAFE_RELEASE(pQuad);
-    SAFE_DELETE(pQuad);
+    SAFE_RELEASE(pDice);
+    SAFE_DELETE(pDice);
     Direct3D::Release();
 	return 0;
 }
