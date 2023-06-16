@@ -14,28 +14,28 @@ class Sprite
 		struct CONSTANT_BUFFER
 		{
 	
-			XMMATRIX	matW;
+			XMMATRIX	matW;//ワールド座標
 		};
 		
 		//頂点情報
 		struct VERTEX
 		{
-			XMVECTOR position;
-			XMVECTOR uv;
+			XMVECTOR position;//位置
+			XMVECTOR uv;//頂点情報
 			
 		};
 protected:
-	UINT64  vertextNum_;
-	std::vector<VERTEX>vertices_;
-	ID3D11Buffer* pVertexBuffer_;
+	UINT64  vertextNum_;//頂点数
+	std::vector<VERTEX>vertices_;//頂点情報
+	ID3D11Buffer* pVertexBuffer_;//頂点バッファ
 
-	UINT64 indexNum;
-	std::vector<int>index_;
+	UINT64 indexNum_;//インデックス数
+	std::vector<int>index_;//インデックス情報
 
-	ID3D11Buffer* PIndexBuffer_;
-	ID3D11Buffer* pConstantBuffer_;
+	ID3D11Buffer* pIndexBuffer_;//インデックスバッファ
+	ID3D11Buffer* pConstantBuffer_;//コンスタントバッファ
 
-	Texture* pTexture_;
+	Texture* pTexture_;//テクスチャ
 public:
 	Sprite();
 	~Sprite();
@@ -58,7 +58,9 @@ private:
 
 	HRESULT LoadTexture();
 
-	void PassDateToCB(DirectX::XMMATRIX&worldMatrix)
+	void PassDateToCB(DirectX::XMMATRIX& worldMatrix);
+	void SetBufferToPipeline();
+
 
 		
 		
