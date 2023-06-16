@@ -115,18 +115,18 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
             static float a = 0;
             a +=0.1;
 
-            static float b = 0;
-            b += 0.01;
+            /*static float b = 0;
+            b += 0.01;*/
             
-            XMMATRIX matH = XMMatrixRotationZ(XMConvertToRadians(b));
+            //XMMATRIX matH = XMMatrixRotationZ(XMConvertToRadians(b));
             XMMATRIX matR = XMMatrixRotationY(XMConvertToRadians(a));
            /* XMMATRIX matT = XMMatrixRotationX(XMConvertToRadians(b));*/
             
             //XMMATRIX matW = XMMatrixTranslation(4, 0, 0);
            // XMMATRIX matS = XMMatrixScaling(1, 3, 1);//Šg¬
-            XMMATRIX matST = matR*matH;
+            XMMATRIX matST = matR;
            pDice->Draw(matST);
-           pDice->Draw(matST);
+           //pDice->Draw(matST);
            
             //pCamera->Release();
 
