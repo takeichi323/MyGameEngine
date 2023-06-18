@@ -144,6 +144,10 @@ void Sprite::Release()
 
 
 
+void Sprite::InitVertexData()
+{
+}
+
 HRESULT Sprite::CreateVertexBuffer()
 {
 	return E_NOTIMPL;
