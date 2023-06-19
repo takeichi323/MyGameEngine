@@ -5,10 +5,10 @@
 
 Sprite::Sprite() :
 	vertextNum_(0),
-	//vertices_(nullptr),
+	vertices_(nullptr),
 	pVertexBuffer_(nullptr),
 	indexNum_(0),
-	//index_(nullptr),
+	index_(nullptr),
 	pIndexBuffer_(nullptr),
 	pConstantBuffer_(nullptr),
 	pTexture_(nullptr)
