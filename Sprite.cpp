@@ -67,9 +67,9 @@ void Sprite::Release()
 	SAFE_DELETE(pTexture_);
 	SAFE_DELETE(pConstantBuffer_);
 	SAFE_DELETE(pIndexBuffer_);
-	//SAFE_DELETE(index_);
+	SAFE_DELETE(index_);
 	SAFE_DELETE(pVertexBuffer_);
-	//SAFE_DELETE(vertices_);
+	SAFE_DELETE(vertices_);
 	
 }
 

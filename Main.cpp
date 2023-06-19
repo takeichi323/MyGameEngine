@@ -113,7 +113,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 			XMMATRIX matS = XMMatrixScaling(2.0, 2.0, 2.0);
 			XMMATRIX mat = matR * matS * matT;*/
 			//pQuad->Draw(mat);
-			XMMATRIX mat=XMMatrixScaling(/*•ª‚©‚ç‚ñ*/);
+			XMMATRIX mat=XMMatrixScaling(512.0f/800.0f,256.0f/600.0f,1.0f/*•ª‚©‚ç‚ñ*/);
 			pSprite->Draw(mat);
 			//pDice->Draw(mat);
 
