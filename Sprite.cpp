@@ -88,7 +88,7 @@ void Sprite::InitVertexData()
 	vertextNum_ = sizeof(vertices) / sizeof(VERTEX);
 
 	vertices_ = new VERTEX[vertextNum_];
-	memccpy(vertices_, vertices, sizeof(vertices));
+	//memccpy(vertices_, vertices, sizeof(vertices));
 }
 
 HRESULT Sprite::CreateVertexBuffer()
