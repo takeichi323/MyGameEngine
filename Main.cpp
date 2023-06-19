@@ -4,6 +4,7 @@
 #include "Quad.h"
 #include "Camera.h"
 #include "Dice.h"
+#include "Sprite.h"
 
 
 //定数宣言
@@ -17,6 +18,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 //Quad* pQuad;
 Dice* pDice;
+Sprite* pSprite;
 
 
 //エントリーポイント
@@ -76,8 +78,12 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 
 	//pQuad = new Quad;
 	//pQuad->Initialize();
-	pDice = new Dice;
-	pDice->Initialize();
+	// 
+	//pDice = new Dice;
+	//pDice->Initialize();
+
+	pSprite = new Sprite;
+	pSprite->Initialize();
 
 	//メッセージループ（何か起きるのを待つ）
 	MSG msg;
@@ -100,14 +106,16 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 			Direct3D::BeginDraw();
 
 			//描画処理
-			static float a = 0;
+			/*static float a = 0;
 			a += 0.1;
 			XMMATRIX matR = XMMatrixRotationY(XMConvertToRadians(a));
 			XMMATRIX matT = XMMatrixTranslation(2, 0, 0);
 			XMMATRIX matS = XMMatrixScaling(2.0, 2.0, 2.0);
-			XMMATRIX mat = matR * matS * matT;
+			XMMATRIX mat = matR * matS * matT;*/
 			//pQuad->Draw(mat);
-			pDice->Draw(mat);
+			XMMATRIX mat=XMMatrixScaling(/*分からん*/);
+			pSprite->Draw(mat);
+			//pDice->Draw(mat);
 
 
 			Direct3D::EndDraw();
@@ -115,6 +123,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 		}
 	}
 	//SAFE_DELETE(pQuad);
+	SAFE_DELETE(pSprite);
 	SAFE_DELETE(pDice);
 	Direct3D::Release();
 

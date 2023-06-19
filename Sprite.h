@@ -10,7 +10,6 @@ class Sprite
 {
 	
 		//コンスタントバッファー
-		
 		struct CONSTANT_BUFFER
 		{
 	
@@ -48,15 +47,15 @@ public:
 
 private:
 
-	virtual void InitVertexData();
-	HRESULT CreateVertexBuffer();
+	virtual void InitVertexData();//頂点情報の準備
+	HRESULT CreateVertexBuffer();//頂点バッファを作成
 
-	virtual void InitVertexData();
-	HRESULT CreateVertexBuffer();
+	virtual void InitIndexData();//インデックス情報を準備
+	HRESULT  CreateIndexBuffer();//インデックスバッファを作成
 
-	HRESULT CreateConstantBuffer();
+	HRESULT CreateConstantBuffer();//コンスタントバッファ作成
 
-	HRESULT LoadTexture();
+	HRESULT LoadTexture();//テクスチャをロード
 
 	void PassDateToCB(DirectX::XMMATRIX& worldMatrix);
 	void SetBufferToPipeline();
