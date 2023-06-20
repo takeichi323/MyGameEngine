@@ -121,8 +121,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 			XMMATRIX mat = matR * matS * matT;*/
 			//pQuad->Draw(mat);
 			static float angle = 0;
-			angle += 0.05;
-			XMMATRIX mat = XMMatrixRotationY(XMConvertToRadians(angle)) * XMMatrixTranslation(0, 3, 0);
+			angle += 0.5;
+			XMMATRIX mat = XMMatrixRotationY(XMConvertToRadians(angle)) * XMMatrixTranslation(3, 2, 0);
 			pDice->Draw(mat);
 
 			mat = XMMatrixScaling(512.0f / 800.0f, 256.0f / 600.0f, 1.0f);
