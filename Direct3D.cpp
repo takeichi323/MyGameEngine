@@ -214,7 +214,8 @@ HRESULT Direct3D::InitShader()
 	};
 
 	//hr = pDevice_->CreateInputLayout(layout, sizeof(layout)/sizeof(D3D11_INPUT_ELEMENT_DESC), pCompileVS->GetBufferPointer(), pCompileVS->GetBufferSize(), &pVertexLayout_);
-	hr = pDevice_->CreateInputLayout(layout.data(), layout.size(), pCompileVS->GetBufferPointer(), pCompileVS->GetBufferSize(),pVertexLayout_);
+	hr = pDevice_->CreateInputLayout(layout.data(), layout.size(),
+		pCompileVS->GetBufferPointer(), pCompileVS->GetBufferSize(), &(shaderBundle[SHADER_2D].pVertexLayout_));
 
 	if (FAILED(hr))
 	{
