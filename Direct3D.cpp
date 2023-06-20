@@ -12,11 +12,15 @@ namespace Direct3D
 	IDXGISwapChain* pSwapChain_;		//スワップチェイン
 	ID3D11RenderTargetView* pRenderTargetView_;	//レンダーターゲットビュー
 
-	ID3D11VertexShader* pVertexShader_ = nullptr;	//頂点シェーダー
-	ID3D11PixelShader* pPixelShader_ = nullptr;		//ピクセルシェーダー
-	ID3D11InputLayout* pVertexLayout_ = nullptr;	//頂点インプットレイアウト
-	ID3D11RasterizerState* pRasterizerState_ = nullptr;	//ラスタライザー
-}
+	struct SHADER_BUNDLE
+	{
+		ID3D11VertexShader* pVertexShader_ = nullptr;	//頂点シェーダー
+		ID3D11PixelShader* pPixelShader_ = nullptr;		//ピクセルシェーダー
+		ID3D11InputLayout* pVertexLayout_ = nullptr;	//頂点インプットレイアウト
+		ID3D11RasterizerState* pRasterizerState_ = nullptr;	//ラスタライザー
+	};
+	SHADER_BUNDLE shaderBunble[SHADER_MAX];
+  }
 
 
 
@@ -193,6 +197,7 @@ HRESULT Direct3D::InitShader()
 	assert(pCompileVS != nullptr); //ここはassertionで処理
 
 	hr = pDevice_->CreateVertexShader(pCompileVS->GetBufferPointer(), pCompileVS->GetBufferSize(), NULL, &pVertexShader_);
+	NULL, & (shaderBunble[SHADER_3D].pVertexShader_);
 	if (FAILED(hr))
 	{
 		//エラー処理
@@ -205,10 +210,11 @@ HRESULT Direct3D::InitShader()
 	std::vector<D3D11_INPUT_ELEMENT_DESC> layout = {
 		{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0,  D3D11_INPUT_PER_VERTEX_DATA, 0 },	//位置
 		{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, sizeof(DirectX::XMVECTOR) , D3D11_INPUT_PER_VERTEX_DATA, 0 },//UV座標
+		{"NORMAL",0,DXGI_FORMAT_R32G32B32_FLOAT,0,sizeof(DirectX::XMVECTOR)*2,D3D11_INPUT_PER_INSTANCE_DATA,0},
 	};
 
 	//hr = pDevice_->CreateInputLayout(layout, sizeof(layout)/sizeof(D3D11_INPUT_ELEMENT_DESC), pCompileVS->GetBufferPointer(), pCompileVS->GetBufferSize(), &pVertexLayout_);
-	hr = pDevice_->CreateInputLayout(layout.data(), layout.size(), pCompileVS->GetBufferPointer(), pCompileVS->GetBufferSize(), &pVertexLayout_);
+	hr = pDevice_->CreateInputLayout(layout.data(), layout.size(), pCompileVS->GetBufferPointer(), pCompileVS->GetBufferSize(),pVertexLayout_);
 
 	if (FAILED(hr))
 	{
@@ -249,14 +255,18 @@ HRESULT Direct3D::InitShader()
 		return hr;
 	}
 
+	
+}
 
+void Direct3D::SetShader(SHADER_TYPE type)
+{
 	//それぞれをデバイスコンテキストにセット
-	pContext_->VSSetShader(pVertexShader_, NULL, 0);	//頂点シェーダー
-	pContext_->PSSetShader(pPixelShader_, NULL, 0);	//ピクセルシェーダー
-	pContext_->IASetInputLayout(pVertexLayout_);	//頂点インプットレイアウト
-	pContext_->RSSetState(pRasterizerState_);		//ラスタライザー
+	pContext_->VSSetShader(shaderBunble[type].pVertexShader_, NULL, 0);	//頂点シェーダー
+	pContext_->PSSetShader(shaderBunble[type].pPixelShader_, NULL, 0);	//ピクセルシェーダー
+	pContext_->IASetInputLayout(shaderBunble[type].pVertexLayout_);	//頂点インプットレイアウト
+	pContext_->RSSetState(shaderBunble[type].pRasterizerState_);		//ラスタライザー
 
-	return S_OK;
+	
 }
 
 //描画開始
@@ -285,10 +295,10 @@ void Direct3D::EndDraw()
 void Direct3D::Release()
 {
 	//解放処理
-	SAFE_RELEASE(pRasterizerState_);
+	/*SAFE_RELEASE(pRasterizerState_);
 	SAFE_RELEASE(pVertexLayout_);
 	SAFE_RELEASE(pPixelShader_);
-	SAFE_RELEASE(pVertexShader_);
+	SAFE_RELEASE(pVertexShader_);*/
 
 	SAFE_RELEASE(pRenderTargetView_);
 	SAFE_RELEASE(pSwapChain_);

@@ -6,6 +6,9 @@ class Dice :
 	//頂点情報の準備
 	void InitVertexData()	override;
 
+
+
+
 	//インデックス情報を準備
 	void InitIndexData()	override;
 };

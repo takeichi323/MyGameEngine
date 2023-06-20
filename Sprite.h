@@ -19,8 +19,8 @@ class Sprite
 		//ТЄУ_ПоХс
 		struct VERTEX
 		{
-			XMVECTOR position;//И Тu
-			XMVECTOR uv;//ТЄУ_ПоХс
+			XMFLOAT3 position;
+			XMFLOAT3 uv;
 			
 		};
 protected:

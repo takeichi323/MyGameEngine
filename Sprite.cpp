@@ -1,16 +1,17 @@
 #include "Sprite.h"
 #include "Camera.h"
+#include "Direct3D.h"
 #include <cassert>
 
 
 Sprite::Sprite() :
-	vertextNum_(0),
+	/*vertextNum_(0),
 	vertices_(nullptr),
 	pVertexBuffer_(nullptr),
 	indexNum_(0),
 	index_(nullptr),
 	pIndexBuffer_(nullptr),
-	pConstantBuffer_(nullptr),
+	pConstantBuffer_(nullptr),*/
 	pTexture_(nullptr)
 
 {
@@ -18,7 +19,10 @@ Sprite::Sprite() :
 
 Sprite::~Sprite()
 {
-	Release();
+
+	SAFE_RELEASE(pVertexBuffer_);
+	SAFE_RELEASE(pIndexBuffer_);
+	//Release();
 }
 
 //初期化
@@ -55,6 +59,8 @@ HRESULT Sprite::Initialize()
 
 void Sprite::Draw(XMMATRIX& worldMatrix)
 {
+	//Direct3D::InitShader(SHADER_2D);
+
 	PassDateToCB(worldMatrix);
 
 	SetBufferToPipeline();
@@ -67,33 +73,39 @@ void Sprite::Release()
 	SAFE_DELETE(pTexture_);
 	SAFE_DELETE(pConstantBuffer_);
 	SAFE_DELETE(pIndexBuffer_);
-	SAFE_DELETE(index_);
 	SAFE_DELETE(pVertexBuffer_);
-	SAFE_DELETE(vertices_);
+	
 	
 }
 
 void Sprite::InitVertexData()
 {
-	// 頂点情報
+	// 頂点データ宣言
 	VERTEX vertices[] =
 	{
-		//正面  1
-		{XMVectorSet(-1.0f,  1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f)},	// 四角形の頂点（左上）
-		{XMVectorSet(1.0f,  1.0f, 0.0f, 0.0f), XMVectorSet(0.25f, 0.0f, 0.0f, 0.0f) },	// 四角形の頂点（右上）
-		{XMVectorSet(1.0f, -1.0f, 0.0f, 0.0f), XMVectorSet(0.25f, 0.5f, 0.0f, 0.0f) },	// 四角形の頂点（右下）
-		{XMVectorSet(-1.0f, -1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 0.5f, 0.0f, 0.0f)  },	// 四角形の頂点（左下）	
+		{ XMFLOAT3(-1.0f,  1.0f, 0.0f),	XMFLOAT3(0.0f, 0.0f, 0.0f) },   // 四角形の頂点（左上）
+		{ XMFLOAT3(1.0f,  1.0f, 0.0f),	XMFLOAT3(1.0f, 0.0f, 0.0f) },   // 四角形の頂点（右上）
+		{ XMFLOAT3(-1.0f, -1.0f, 0.0f),	XMFLOAT3(0.0f, 1.0f, 0.0f) },   // 四角形の頂点（左下）
+		{ XMFLOAT3(1.0f, -1.0f, 0.0f),	XMFLOAT3(1.0f, 1.0f, 0.0f) },   // 四角形の頂点（右下）
 	};
 
-	vertextNum_ = sizeof(vertices) / sizeof(VERTEX);
 
-	vertices_ = new VERTEX[vertextNum_];
-	//memccpy(vertices_, vertices, sizeof(vertices));
+	// 頂点データ用バッファの設定
+	D3D11_BUFFER_DESC bd_vertex;
+	bd_vertex.ByteWidth = sizeof(vertices);
+	bd_vertex.Usage = D3D11_USAGE_DEFAULT;
+	bd_vertex.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+	bd_vertex.CPUAccessFlags = 0;
+	bd_vertex.MiscFlags = 0;
+	bd_vertex.StructureByteStride = 0;
+	D3D11_SUBRESOURCE_DATA data_vertex;
+	data_vertex.pSysMem = vertices;
+	Direct3D::pDevice_->CreateBuffer(&bd_vertex, &data_vertex, &pVertexBuffer_);
 }
 
 HRESULT Sprite::CreateVertexBuffer()
 {
-	HRESULT hr;
+	/*HRESULT hr;
 	D3D11_BUFFER_DESC bd_vertex;
 	bd_vertex.ByteWidth = sizeof(VERTEX)* vertextNum_;
 	bd_vertex.Usage = D3D11_USAGE_DEFAULT;
@@ -102,7 +114,19 @@ HRESULT Sprite::CreateVertexBuffer()
 	bd_vertex.MiscFlags = 0;
 	bd_vertex.StructureByteStride = 0;
 	D3D11_SUBRESOURCE_DATA data_vertex;
+	data_vertex.pSysMem = vertices_;*/
+
+	HRESULT hr;
+	D3D11_BUFFER_DESC bd_vertex;
+	bd_vertex.ByteWidth = sizeof(VERTEX) * vertextNum_;
+	bd_vertex.Usage = D3D11_USAGE_DEFAULT;
+	bd_vertex.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+	bd_vertex.CPUAccessFlags = 0;
+	bd_vertex.MiscFlags = 0;
+	bd_vertex.StructureByteStride = 0;
+	D3D11_SUBRESOURCE_DATA data_vertex;
 	data_vertex.pSysMem = vertices_;
+	Direct3D::pDevice_->CreateBuffer(&bd_vertex, &data_vertex, &pVertexBuffer_);
 	
 
 	hr = Direct3D::pDevice_->CreateBuffer(&bd_vertex, &data_vertex, &pVertexBuffer_);
@@ -119,34 +143,29 @@ void Sprite::InitIndexData()
 {
 	int index[] = {
 		0,2,3, 0,1,2, };
+	HRESULT hr;
+	// インデックスバッファを生成する
+	D3D11_BUFFER_DESC   bd;
+	bd.Usage = D3D11_USAGE_DEFAULT;
+	bd.ByteWidth = sizeof(int) * indexNum_;
+	bd.BindFlags = D3D11_BIND_INDEX_BUFFER;
+	bd.CPUAccessFlags = 0;
+	bd.MiscFlags = 0;
 
+	D3D11_SUBRESOURCE_DATA InitData;
+	InitData.pSysMem = index;
+	InitData.SysMemPitch = 0;
+	InitData.SysMemSlicePitch = 0;
+
+    Direct3D::pDevice_->CreateBuffer(&bd, &InitData, &pIndexBuffer_);
+	
 
 
 }
 
 HRESULT Sprite::CreateIndexBuffer()
 {
-	HRESULT hr;
-	// インデックスバッファを生成する
-	D3D11_BUFFER_DESC   bd;
-	bd.Usage = D3D11_USAGE_DEFAULT;
-	bd.ByteWidth = sizeof(int)*indexNum_;
-	bd.BindFlags = D3D11_BIND_INDEX_BUFFER;
-	bd.CPUAccessFlags = 0;
-	bd.MiscFlags = 0;
-
-	D3D11_SUBRESOURCE_DATA InitData;
-	InitData.pSysMem = index_;
-	InitData.SysMemPitch = 0;
-	InitData.SysMemSlicePitch = 0;
-
-	hr = Direct3D::pDevice_->CreateBuffer(&bd, &InitData, &pIndexBuffer_);
-	if (FAILED(hr))
-	{
-		MessageBox(nullptr, "CreateBufferの初期化に失敗しました", "エラー", MB_OK);
-		return hr;
-	}
-	return S_OK;
+	
 }
 
 HRESULT Sprite::CreateConstantBuffer()

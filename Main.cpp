@@ -113,9 +113,11 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 			XMMATRIX matS = XMMatrixScaling(2.0, 2.0, 2.0);
 			XMMATRIX mat = matR * matS * matT;*/
 			//pQuad->Draw(mat);
+			XMMATRIX mat = XMMatrixRotationY(XMConvertToRadians(angle)) * XMMatrixTranslation(0, 3, 0);
+			XMMatrixIdentity();
 			XMMATRIX mat=XMMatrixScaling(512.0f/800.0f,256.0f/600.0f,1.0f/*分からん*/);
 			pSprite->Draw(mat);
-			//pDice->Draw(mat);
+			pDice->Draw(mat);
 
 
 			Direct3D::EndDraw();
@@ -129,6 +131,9 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 
 	return 0;
 }
+
+
+
 
 //ウィンドウプロシージャ（何かあった時によばれる関数）
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
