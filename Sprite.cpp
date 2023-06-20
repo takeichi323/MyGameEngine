@@ -125,7 +125,7 @@ HRESULT Sprite::CreateVertexBuffer()
 	bd_vertex.MiscFlags = 0;
 	bd_vertex.StructureByteStride = 0;
 	D3D11_SUBRESOURCE_DATA data_vertex;
-	data_vertex.pSysMem = vertices_;
+	data_vertex.pSysMem = vertices_.data();
 	Direct3D::pDevice_->CreateBuffer(&bd_vertex, &data_vertex, &pVertexBuffer_);
 	
 
@@ -165,7 +165,26 @@ void Sprite::InitIndexData()
 
 HRESULT Sprite::CreateIndexBuffer()
 {
-	
+	D3D11_BUFFER_DESC   bd;
+	bd.Usage = D3D11_USAGE_DEFAULT;
+	bd.ByteWidth = sizeof(int) * indexNum_;
+	bd.BindFlags = D3D11_BIND_INDEX_BUFFER;
+	bd.CPUAccessFlags = 0;
+	bd.MiscFlags = 0;
+
+	D3D11_SUBRESOURCE_DATA InitData;
+	InitData.pSysMem = index_.data();
+	InitData.SysMemPitch = 0;
+	InitData.SysMemSlicePitch = 0;
+
+	HRESULT hr;
+	hr = Direct3D::pDevice_->CreateBuffer(&bd, &InitData, &pIndexBuffer_);
+	if (FAILED(hr))
+	{
+		MessageBox(NULL, "インデックスバッファの作成に失敗しました", "エラー", MB_OK);
+		return hr;
+	}
+	return S_OK;
 }
 
 HRESULT Sprite::CreateConstantBuffer()

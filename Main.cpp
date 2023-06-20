@@ -17,8 +17,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 
 //Quad* pQuad;
-Dice* pDice;
-Sprite* pSprite;
+//Dice* pDice;
+//Sprite* pSprite;
 
 
 //エントリーポイント
@@ -82,8 +82,15 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 	//pDice = new Dice;
 	//pDice->Initialize();
 
-	pSprite = new Sprite;
-	pSprite->Initialize();
+	//pSprite = new Sprite;
+	//pSprite->Initialize();
+
+
+	Dice* pDice = new Dice;
+	hr = pDice->Initialize();
+	Sprite* pSprite = new Sprite;
+	hr = pSprite->Initialize();
+
 
 	//メッセージループ（何か起きるのを待つ）
 	MSG msg;
@@ -113,11 +120,16 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 			XMMATRIX matS = XMMatrixScaling(2.0, 2.0, 2.0);
 			XMMATRIX mat = matR * matS * matT;*/
 			//pQuad->Draw(mat);
+			static float angle = 0;
+			angle += 0.05;
 			XMMATRIX mat = XMMatrixRotationY(XMConvertToRadians(angle)) * XMMatrixTranslation(0, 3, 0);
-			XMMatrixIdentity();
-			XMMATRIX mat=XMMatrixScaling(512.0f/800.0f,256.0f/600.0f,1.0f/*分からん*/);
-			pSprite->Draw(mat);
 			pDice->Draw(mat);
+
+			mat = XMMatrixScaling(512.0f / 800.0f, 256.0f / 600.0f, 1.0f);
+			pSprite->Draw(mat);
+
+			Direct3D::EndDraw();
+
 
 
 			Direct3D::EndDraw();
