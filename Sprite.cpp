@@ -1,7 +1,7 @@
-#include "Sprite.h"
 
 #include "Sprite.h"
 #include "Camera.h"
+#include "Transform.h"
 
 
 //コンストラクタ
@@ -53,12 +53,14 @@ HRESULT Sprite::Initialize()
 
 
 //描画
-void Sprite::Draw(XMMATRIX& worldMatrix)
+void Sprite::Draw(Transform& transform)
 {
 	Direct3D::SetShader(SHADER_2D);
 
+	transform.Calclation();
+
 	//コンスタントバッファに情報を渡す
-	PassDataToCB(worldMatrix);
+	PassDataToCB(transform.GetWorldMatrix());
 
 	//頂点バッファ、インデックスバッファ、コンスタントバッファをパイプラインにセット
 	SetBufferToPipeline();
@@ -199,7 +201,7 @@ HRESULT Sprite::LoadTexture()
 }
 
 //コンスタントバッファに各種情報を渡す
-void Sprite::PassDataToCB(DirectX::XMMATRIX& worldMatrix)
+void Sprite::PassDataToCB(XMMATRIX worldMatrix)
 {
 	CONSTANT_BUFFER cb;
 	cb.matW = XMMatrixTranspose(worldMatrix);

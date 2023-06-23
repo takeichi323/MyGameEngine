@@ -5,6 +5,7 @@
 #include "Camera.h"
 #include "Dice.h"
 #include "Sprite.h"
+#include "Transform.h"
 
 
 //’è”éŒ¾
@@ -111,6 +112,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 
 			//ƒQ[ƒ€‚Ìˆ—
 			Direct3D::BeginDraw();
+			
 
 			//•`‰æˆ—
 			/*static float a = 0;
@@ -120,13 +122,27 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 			XMMATRIX matS = XMMatrixScaling(2.0, 2.0, 2.0);
 			XMMATRIX mat = matR * matS * matT;*/
 			//pQuad->Draw(mat);
-			static float angle = 0;
+			/*static float angle = 0;
 			angle += 0.5;
-			XMMATRIX mat = XMMatrixRotationY(XMConvertToRadians(angle)) * XMMatrixTranslation(3, 2, 0);
-			pDice->Draw(mat);
+			XMMATRIX mat = XMMatrixRotationY(XMConvertToRadians(angle)) * XMMatrixTranslation(3, 2, 0);*/
 
-			mat = XMMatrixScaling(512.0f / 800.0f, 256.0f / 600.0f, 1.0f);
-			pSprite->Draw(mat);
+			static float angle = 0;
+			angle += 0.05;
+
+			//XMMATRIX mat = XMMatrixRotationY(XMConvertToRadians(angle)) * XMMatrixTranslation(0,3,0);
+
+			Transform diceTransform;
+			diceTransform.position_.y = 3.0f;
+			diceTransform.rotate_.y = angle;
+			pDice->Draw(diceTransform);
+
+			////mat = XMMatrixScaling(512.0f / 800.0f, 256.0f / 600.0f, 1.0f);
+			Transform spriteTransform;
+			spriteTransform.scale_.x = 512.0f / 800.0f;
+			spriteTransform.scale_.y = 256.0f / 600.0f;
+			//mat = XMMatrixScaling(512.0f/800.0f, 256.0f/600.0f, 1.0f);
+			pSprite->Draw(spriteTransform);
+			
 
 			Direct3D::EndDraw();
 

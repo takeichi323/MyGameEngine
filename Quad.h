@@ -4,6 +4,7 @@
 #include "Direct3D.h"
 #include "Texture.h"
 #include <vector>
+#include "Transform.h"
 
 using namespace DirectX;
 
@@ -11,7 +12,7 @@ using namespace DirectX;
 struct CONSTANT_BUFFER
 {
 	XMMATRIX	matWVP;
-	XMMATRIX	matW;
+	XMMATRIX	matNormal; //matWからNormal用に改名
 };
 
 struct VERTEX
@@ -24,7 +25,6 @@ struct VERTEX
 
 class Quad
 {
-
 protected:
 	int vertexNum_;
 	std::vector<VERTEX> vertices_;
@@ -39,7 +39,7 @@ public:
 	Quad();
 	~Quad();
 	HRESULT Initialize();
-	void Draw(XMMATRIX& worldMatrix);
+	void Draw(Transform& transform);
 	void Release();
 
 private:
@@ -50,4 +50,7 @@ private:
 	HRESULT CreateConstantBuffer();
 	HRESULT LoadTexture();
 
+	//---------Draw関数から呼ばれる関数---------
+	void PassDataToCB(Transform transform);	//コンスタントバッファに各種情報を渡す
+	void SetBufferToPipeline();
 };
