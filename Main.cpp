@@ -1,7 +1,7 @@
 //インクルード
 #include <Windows.h>
 #include "Direct3D.h"
-#include "Quad.h"
+//#include "Quad.h"
 #include "Camera.h"
 #include "Dice.h"
 #include "Sprite.h"
@@ -19,7 +19,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 //Quad* pQuad;
 //Dice* pDice;
-//Sprite* pSprite;
 
 
 //エントリーポイント
@@ -79,19 +78,11 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 
 	//pQuad = new Quad;
 	//pQuad->Initialize();
-	// 
-	//pDice = new Dice;
-	//pDice->Initialize();
-
-	//pSprite = new Sprite;
-	//pSprite->Initialize();
-
 
 	Dice* pDice = new Dice;
 	hr = pDice->Initialize();
 	Sprite* pSprite = new Sprite;
 	hr = pSprite->Initialize();
-
 
 	//メッセージループ（何か起きるのを待つ）
 	MSG msg;
@@ -112,23 +103,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 
 			//ゲームの処理
 			Direct3D::BeginDraw();
-			
-
-			//描画処理
-			/*static float a = 0;
-			a += 0.1;
-			XMMATRIX matR = XMMatrixRotationY(XMConvertToRadians(a));
-			XMMATRIX matT = XMMatrixTranslation(2, 0, 0);
-			XMMATRIX matS = XMMatrixScaling(2.0, 2.0, 2.0);
-			XMMATRIX mat = matR * matS * matT;*/
-			//pQuad->Draw(mat);
-			/*static float angle = 0;
-			angle += 0.5;
-			XMMATRIX mat = XMMatrixRotationY(XMConvertToRadians(angle)) * XMMatrixTranslation(3, 2, 0);*/
-
 			static float angle = 0;
 			angle += 0.05;
-
 			//XMMATRIX mat = XMMatrixRotationY(XMConvertToRadians(angle)) * XMMatrixTranslation(0,3,0);
 
 			Transform diceTransform;
@@ -142,26 +118,19 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 			spriteTransform.scale_.y = 256.0f / 600.0f;
 			//mat = XMMatrixScaling(512.0f/800.0f, 256.0f/600.0f, 1.0f);
 			pSprite->Draw(spriteTransform);
-			
-
-			Direct3D::EndDraw();
-
-
 
 			Direct3D::EndDraw();
 
 		}
 	}
 	//SAFE_DELETE(pQuad);
-	SAFE_DELETE(pSprite);
 	SAFE_DELETE(pDice);
+	SAFE_DELETE(pSprite);
+
 	Direct3D::Release();
 
 	return 0;
 }
-
-
-
 
 //ウィンドウプロシージャ（何かあった時によばれる関数）
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)

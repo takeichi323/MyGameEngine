@@ -1,7 +1,7 @@
+#include "Sprite.h"
 
 #include "Sprite.h"
 #include "Camera.h"
-#include "Transform.h"
 
 
 //コンストラクタ
@@ -57,7 +57,8 @@ void Sprite::Draw(Transform& transform)
 {
 	Direct3D::SetShader(SHADER_2D);
 
-	transform.Calclation();
+
+	transform.Calclation();//トランスフォームを計算
 
 	//コンスタントバッファに情報を渡す
 	PassDataToCB(transform.GetWorldMatrix());
@@ -80,8 +81,7 @@ void Sprite::Release()
 }
 
 
-
-
+///////////////ここからはprivate関数///////////////
 
 //頂点情報の準備
 void Sprite::InitVertexData()
