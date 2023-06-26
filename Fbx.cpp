@@ -170,4 +170,7 @@ void Fbx::Draw(Transform& transform)
 
 void Fbx::Release()
 {
+	SAFE_RELEASE(pConstantBuffer_);
+	SAFE_RELEASE(pIndexBuffer_);
+	SAFE_RELEASE(pVertexBuffer_);
 }
