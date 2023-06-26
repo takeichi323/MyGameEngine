@@ -123,7 +123,10 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 			spriteTransform.scale_.y = 256.0f / 600.0f;
 			//mat = XMMatrixScaling(512.0f/800.0f, 256.0f/600.0f, 1.0f);
 			pSprite->Draw(spriteTransform);
-			pFbx->Draw(diceTransform);
+
+			Transform FbxTransform;
+			FbxTransform.position_.y = 1.0f;
+			pFbx->Draw(FbxTransform);
 
 			Direct3D::EndDraw();
 
