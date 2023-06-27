@@ -4,40 +4,52 @@
 #include <fbxsdk.h>
 #include <string>
 #include "Transform.h"
-
-
+//#include "Texture.h"
 
 #pragma comment(lib, "LibFbxSDK-MD.lib")
 #pragma comment(lib, "LibXml2-MD.lib")
 #pragma comment(lib, "zlib-MD.lib")
 
+class Texture;//ポインタの場合中身がないので"前方宣言"をする
+//出来るだけヘッダーでヘッダーをincludeしないようにする。
+
 class Fbx
 {
 	struct CONSTANT_BUFFER
 	{
-		XMMATRIX	matWVP;//ワールドのやつ
+		XMMATRIX	matWVP;
 		XMMATRIX	matNormal;
 	};
 
 	struct VERTEX
 	{
-		XMVECTOR position;//位置
+		XMVECTOR position;
+	};
+
+	//マテリアル
+	struct MATERIAL
+	{
+		Texture* pTexture;
 	};
 
 	int vertexCount_;	//頂点数
 	int polygonCount_;	//ポリゴン数
-	//オブジェクトを見ないとポリゴン数と頂点数が分からない
+	int materialCount_;	//マテリアルの個数
 
 	ID3D11Buffer* pVertexBuffer_;
 	ID3D11Buffer* pIndexBuffer_;
 	ID3D11Buffer* pConstantBuffer_;
+	MATERIAL* pMaterialList_;
+
+
+	void InitVertex(fbxsdk::FbxMesh* mesh);
+	void InitIndex(fbxsdk::FbxMesh* mesh);
+	void IntConstantBuffer();
+	void InitMaterial(fbxsdk::FbxNode* pNode);
 public:
 
 	Fbx();
 	HRESULT Load(std::string fileName);
-	HRESULT IntConstantBuffer();//コンスタントバッファ
-	void InitIndex(fbxsdk::FbxMesh* mesh);
-	void InitVertex(fbxsdk::FbxMesh* mesh);//頂点バッファ準備
 	void    Draw(Transform& transform);
 	void    Release();
 };
