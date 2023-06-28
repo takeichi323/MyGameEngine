@@ -3,6 +3,7 @@
 #include <d3d11.h>
 #include <fbxsdk.h>
 #include <string>
+#include <vector>
 #include "Transform.h"
 //#include "Texture.h"
 
@@ -25,6 +26,8 @@ class Fbx
 	{
 		XMVECTOR position;
 		XMVECTOR uv;
+		XMVECTOR normal;
+
 	};
 
 	//ƒ}ƒeƒŠƒAƒ‹
@@ -41,6 +44,7 @@ class Fbx
 	ID3D11Buffer** pIndexBuffer_;
 	ID3D11Buffer* pConstantBuffer_;
 	MATERIAL* pMaterialList_;
+	//vector<int>intdexCount_;
 
 
 	void InitVertex(fbxsdk::FbxMesh* mesh);
