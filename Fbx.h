@@ -3,37 +3,40 @@
 #include <d3d11.h>
 #include <fbxsdk.h>
 #include <string>
-#include <vector>
 #include "Transform.h"
-//#include "Texture.h"
+#include <vector>
+
 
 #pragma comment(lib, "LibFbxSDK-MD.lib")
 #pragma comment(lib, "LibXml2-MD.lib")
 #pragma comment(lib, "zlib-MD.lib")
 
-class Texture;//ポインタの場合中身がないので"前方宣言"をする
-//出来るだけヘッダーでヘッダーをincludeしないようにする。
+using std::vector;
+
+class Texture;
 
 class Fbx
 {
-	struct CONSTANT_BUFFER
-	{
-		XMMATRIX	matWVP;
-		XMMATRIX	matNormal;
-	};
-
-	struct VERTEX
-	{
-		XMVECTOR position;
-		XMVECTOR uv;
-		XMVECTOR normal;
-
-	};
-
 	//マテリアル
 	struct MATERIAL
 	{
 		Texture* pTexture;
+		XMFLOAT4 diffuse;
+	};
+
+	struct CONSTANT_BUFFER
+	{
+		XMMATRIX	matWVP;
+		XMMATRIX	matNormal;
+		XMFLOAT4	diffuseColor;
+		int			isTextured;
+	};
+
+	struct VERTEX
+	{
+		XMVECTOR position;//位置
+		XMVECTOR uv; //テクスチャ座標
+		XMVECTOR normal; //法線ベクトル
 	};
 
 	int vertexCount_;	//頂点数
@@ -44,8 +47,7 @@ class Fbx
 	ID3D11Buffer** pIndexBuffer_;
 	ID3D11Buffer* pConstantBuffer_;
 	MATERIAL* pMaterialList_;
-	//vector<int>intdexCount_;
-
+	vector <int> indexCount_;
 
 	void InitVertex(fbxsdk::FbxMesh* mesh);
 	void InitIndex(fbxsdk::FbxMesh* mesh);
