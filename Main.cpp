@@ -7,6 +7,7 @@
 #include "Sprite.h"
 #include "Transform.h"
 #include "Fbx.h"
+#include "Input.h"
 
 
 //定数宣言
@@ -21,6 +22,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 //Quad* pQuad;
 //Dice* pDice;
 Fbx* pFbx;
+
 
 
 //エントリーポイント
@@ -74,6 +76,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 		PostQuitMessage(0); //エラー起きたら強制終了
 	}
 
+	//DirectInputの初期化
+	Input::Initialize(hWnd);
 	Camera::Initialize();
 
 
@@ -107,7 +111,10 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 			Camera::Update();
 
 			//ゲームの処理
+			
 			Direct3D::BeginDraw();
+			//入力情報の更新
+			Input::Update();
 			static float angle = 0;
 			angle += 0.05;
 			//XMMATRIX mat = XMMatrixRotationY(XMConvertToRadians(angle)) * XMMatrixTranslation(0,3,0);
@@ -131,6 +138,12 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 
 			Direct3D::EndDraw();
 
+			//試しにキーボード入力
+			if (Input::IsKey(DIK_ESCAPE))
+			{
+				PostQuitMessage(0);
+			}
+
 		}
 	}
 	//SAFE_DELETE(pQuad);
@@ -138,6 +151,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 	SAFE_DELETE(pSprite);
 	SAFE_DELETE(pFbx);
 
+
+	Input::Release();
 	Direct3D::Release();
 
 	return 0;
