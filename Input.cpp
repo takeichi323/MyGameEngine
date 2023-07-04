@@ -26,7 +26,7 @@ namespace Input
 	bool IsKeyDown(int keyCode)
 	{
 		//¡‚Í‰Ÿ‚µ‚Ä‚ÄA‘O‰ñ‚Í‰Ÿ‚µ‚Ä‚È‚¢
-		if (keyState[DIK_ESCAPE]= prevKeyState[0])
+		if ( )
 		{
 			return true;
 		}
