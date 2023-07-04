@@ -1,13 +1,8 @@
 //インクルード
 #include <Windows.h>
-#include "Direct3D.h"
-//#include "Quad.h"
-#include "Camera.h"
-#include "Dice.h"
-#include "Sprite.h"
-#include "Transform.h"
-#include "Fbx.h"
-#include "Input.h"
+#include "Engine/Direct3D.h"
+#include "Engine/Camera.h"
+#include "Engine/Input.h"
 
 
 //定数宣言
@@ -19,9 +14,7 @@ const int WINDOW_HEIGHT = 600; //ウィンドウの高さ
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 
-//Quad* pQuad;
-//Dice* pDice;
-Fbx* pFbx;
+
 
 
 
@@ -76,22 +69,12 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 		PostQuitMessage(0); //エラー起きたら強制終了
 	}
 
-	//DirectInputの初期化
-	Input::Initialize(hWnd);
+	
 	Camera::Initialize();
+	Input::Initialize(hWnd);
 
 
-
-	//pQuad = new Quad;
-	//pQuad->Initialize();
-
-	Dice* pDice = new Dice;
-	hr = pDice->Initialize();
-	Sprite* pSprite = new Sprite;
-	hr = pSprite->Initialize();
-
-	pFbx = new Fbx;
-	pFbx->Load("Assets/odenn.fbx");
+	
 
 	//メッセージループ（何か起きるのを待つ）
 	MSG msg;
@@ -110,70 +93,21 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 		{
 			Camera::Update();
 
+			Input::Update();
 			//ゲームの処理
 			
 			Direct3D::BeginDraw();
-			//入力情報の更新
-			Input::Update();
-			static float angle = 0;
-			angle += 0.05;
-			//XMMATRIX mat = XMMatrixRotationY(XMConvertToRadians(angle)) * XMMatrixTranslation(0,3,0);
-
-			Transform diceTransform;
-			diceTransform.position_.y = 3.0f;
-			diceTransform.rotate_.y = angle;
-			//pDice->Draw(diceTransform);
-
-			////mat = XMMatrixScaling(512.0f / 800.0f, 256.0f / 600.0f, 1.0f);
-			Transform spriteTransform;
-			spriteTransform.scale_.x = 512.0f / 800.0f;
-			spriteTransform.scale_.y = 256.0f / 600.0f;
-			//mat = XMMatrixScaling(512.0f/800.0f, 256.0f/600.0f, 1.0f);
-			//pSprite->Draw(spriteTransform);
-
-			Transform FbxTransform;
-			FbxTransform.position_.y = -1.0f;
-			FbxTransform.rotate_.y = angle;
-			pFbx->Draw(FbxTransform);
-
+			
 			Direct3D::EndDraw();
 
-			/*if (Input::IsKeyDown(DIK_ESCAPE))
-			{
-				static int cnt = 0;
-				cnt++;
-				if (cnt >= 3)
-				{
-					PostQuitMessage(0);
-				}
-			}*/
-
-
-			/*if (Input::IsKeyDown(DIK_A))
-			{
-				
-				Transform TransformA;
-				TransformA.position_.x -= 1.0f;
-					
-			}
-			if (Input::IsKeyDown(DIK_D))
-			{
-
-				Transform TransformD;
-				TransformD.position_.x += 1.0f;
-				
-			}*/
+			
 			
 		}
 	}
-	//SAFE_DELETE(pQuad);
-	SAFE_DELETE(pDice);
-	SAFE_DELETE(pSprite);
-	SAFE_DELETE(pFbx);
-
-
 	Input::Release();
 	Direct3D::Release();
+
+	
 
 	return 0;
 }
