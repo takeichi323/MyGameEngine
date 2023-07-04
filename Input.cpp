@@ -23,10 +23,19 @@ namespace Input
 		pKeyDevice->GetDeviceState(sizeof(keyState), &keyState);
 	}
 
+
+	bool IsKey(int keyCode)
+	{
+		if (keyState[keyCode] & 0x80)
+		{
+			return true;
+		}
+		return false;
+	}
 	bool IsKeyDown(int keyCode)
 	{
 		//¡‚Í‰Ÿ‚µ‚Ä‚ÄA‘O‰ñ‚Í‰Ÿ‚µ‚Ä‚È‚¢
-		if ( )
+		if (keyState[keyCode] & 0x80&&!(prevKeyState[keyCode]&0x80))
 		{
 			return true;
 		}

@@ -148,6 +148,22 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 				}
 			}
 
+
+			/*if (Input::IsKeyDown(DIK_A))
+			{
+				
+				Transform TransformA;
+				TransformA.position_.x -= 1.0f;
+					
+			}
+			if (Input::IsKeyDown(DIK_D))
+			{
+
+				Transform TransformD;
+				TransformD.position_.x += 1.0f;
+				
+			}*/
+			
 		}
 	}
 	//SAFE_DELETE(pQuad);
