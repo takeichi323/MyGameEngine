@@ -138,10 +138,14 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 
 			Direct3D::EndDraw();
 
-			//試しにキーボード入力
-			if (Input::IsKey(DIK_ESCAPE))
+			if (Input::IsKeyDown(DIK_ESCAPE))
 			{
-				PostQuitMessage(0);
+				static int cnt = 0;
+				cnt++;
+				if (cnt >= 3)
+				{
+					PostQuitMessage(0);
+				}
 			}
 
 		}

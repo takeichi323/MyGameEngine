@@ -5,6 +5,7 @@ namespace Input
 	LPDIRECTINPUT8   pDInput = nullptr;
 	LPDIRECTINPUTDEVICE8 pKeyDevice = nullptr;
 	BYTE keyState[256] = { 0 };
+	BYTE prevKeyState[256];    //前フレームでの各キーの状態
 
 	void Initialize(HWND hWnd)
 	{
@@ -17,13 +18,15 @@ namespace Input
 
 	void Update()
 	{
+		memcpy(prevKeyState, keyState,sizeof(BYTE)*256);
 		pKeyDevice->Acquire();
 		pKeyDevice->GetDeviceState(sizeof(keyState), &keyState);
 	}
 
-	bool IsKey(int keyCode)
+	bool IsKeyDown(int keyCode)
 	{
-		if (keyState[keyCode] & 128)
+		//今は押してて、前回は押してない
+		if (keyState[DIK_ESCAPE]= prevKeyState[0])
 		{
 			return true;
 		}
