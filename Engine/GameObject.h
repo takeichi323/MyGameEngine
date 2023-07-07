@@ -10,7 +10,7 @@ using std::list;
 class GameObject
 {
 protected:
-	list <GameObject*>             schildList_;
+	list <GameObject*>             childList_;
 	Transform	                   transform_;
 	GameObject*                    pParent_;
 	std::string                    objectName_;
@@ -24,5 +24,14 @@ public:
 	virtual void Update() = 0;
 	virtual void Draw() = 0;
 	virtual void Release() = 0;
+	void DrawSub();
+	template <class T>
+	void Instantiate(GameObject* parent)
+	{
+		T* pObject;
+		pObject = new T(parent);
+		pObject->Initialize();
+		childList_.push_back(pObject);
+	}
 };
 

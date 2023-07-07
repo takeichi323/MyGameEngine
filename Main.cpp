@@ -98,6 +98,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 			Direct3D::BeginDraw();
 			
 			//ルートジョブから、すべてのオブジェクトのDrawを呼ぶ
+			pRootJob->DrawSub();
 
 			Direct3D::EndDraw();
 
