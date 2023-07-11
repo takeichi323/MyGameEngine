@@ -9,6 +9,7 @@ using std::list;
 
 class GameObject
 {
+private:
 	bool IsDead();
 
 	//struct OBJECT_STATE
