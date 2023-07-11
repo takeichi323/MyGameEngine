@@ -9,6 +9,14 @@ using std::list;
 
 class GameObject
 {
+	bool IsDead();
+
+	//struct OBJECT_STATE
+	//{
+	//	
+	//	unsigned dead : 1;			//çÌèúÇ∑ÇÈÇ©
+	//};
+	//OBJECT_STATE state_;
 protected:
 	list <GameObject*>             childList_;
 	Transform	                   transform_;
@@ -27,14 +35,16 @@ public:
 	void DrawSub();
 	void UpdateSub();
 	void ReleaseSub();
-	void IsDead();
+	void KillMe();
+	
 	template <class T>
-	void Instantiate(GameObject* parent)
+	GameObject* Instantiate(GameObject* parent)
 	{
 		T* pObject;
 		pObject = new T(parent);
 		pObject->Initialize();
 		childList_.push_back(pObject);
+		return pObject;
 	}
 };
 
