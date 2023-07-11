@@ -16,17 +16,21 @@ void PlayScene::Initialize()
 	//pPlayer->Initialize();
 	//childList_.push_back(pPlayer);//PlaySceneの子として、プレイヤーを登録
 	Instantiate<Player>(this);
+	
 }
 
 //更新
 void PlayScene::Update()
 {
+	
 	this->transform_.rotate_.y += 1;
+	
 }
 
 //描画
 void PlayScene::Draw()
 {
+	
 	
 }
 
