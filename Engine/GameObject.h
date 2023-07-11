@@ -27,6 +27,7 @@ public:
 	void DrawSub();
 	void UpdateSub();
 	void ReleaseSub();
+	void IsDead();
 	template <class T>
 	void Instantiate(GameObject* parent)
 	{
