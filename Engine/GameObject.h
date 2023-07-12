@@ -4,20 +4,12 @@
 #include "Transform.h"
 #include <string>
 
-
+using std::string;
 using std::list;
 
 class GameObject
 {
-private:
-	bool IsDead();
-
-	//struct OBJECT_STATE
-	//{
-	//	
-	//	unsigned dead : 1;			//çÌèúÇ∑ÇÈÇ©
-	//};
-	//OBJECT_STATE state_;
+	bool IsDead;
 protected:
 	list <GameObject*>             childList_;
 	Transform	                   transform_;
@@ -37,6 +29,8 @@ public:
 	void UpdateSub();
 	void ReleaseSub();
 	void KillMe();
+	void SetPosition(XMFLOAT3 position);
+	void SetPosition(float x, float y, float z);
 	
 	template <class T>
 	GameObject* Instantiate(GameObject* parent)

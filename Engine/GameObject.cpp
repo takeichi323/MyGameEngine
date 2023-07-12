@@ -1,13 +1,15 @@
 #include "GameObject.h"
 
 GameObject::GameObject()
-	:pParent_(nullptr)
+	:pParent_(nullptr),IsDead(false)
 {
 }
 
 GameObject::GameObject(GameObject* parent, const std::string& name)
-	:pParent_(nullptr),IsDead(false)
+	:pParent_(parent),IsDead(false),objectName_(name)
 {
+	if (parent != nullptr)
+		this->transform_.pParent_ = &(parent->transform_);
 }
 
 GameObject::~GameObject()
@@ -31,6 +33,7 @@ void GameObject::UpdateSub()
 		if ((*itr)->IsDead == true)
 		{
 			(*itr)->ReleaseSub();
+			//SAFE_DELETE(*itr);
 			itr=childList_.erase(itr);
 		}
 		else
@@ -42,19 +45,31 @@ void GameObject::UpdateSub()
 
 void GameObject::ReleaseSub()
 {
-	Release();
+	
 	for (auto itr = childList_.begin(); itr != childList_.end(); itr++)
+	{
+	
 		(*itr)->ReleaseSub();
+		//SAFE_DELETE(*itr);
+	}
+	Release();
 }
 
-bool GameObject::IsDead()
-{
-	return ();
-}
+
 
 void GameObject::KillMe()
 {
 	IsDead = true;
+}
+
+void GameObject::SetPosition(XMFLOAT3 position)
+{
+	transform_.position_ = position;
+}
+
+void GameObject::SetPosition(float x, float y, float z)
+{
+	SetPosition(XMFLOAT3(x, y, z));
 }
 
 
