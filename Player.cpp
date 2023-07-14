@@ -14,7 +14,7 @@ Player::Player(GameObject* parent)
 
 void Player::Initialize()
 {
-	pFbx = new Fbx;
+
 	pFbx->Load("Assets/odenn.fbx");
 	this->transform_.scale_.x = 0.5;
 	this->transform_.scale_.y = 0.5;
