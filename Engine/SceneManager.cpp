@@ -1,5 +1,8 @@
 #include "SceneManager.h"
+#include "Model.h"
 #include "../TestScene.h"
+#include "../PlayScene.h"
+#include "Direct3D.h"
 
 
 SceneManager::SceneManager(GameObject* parent)
@@ -29,8 +32,8 @@ void SceneManager::Update()
 		(*scene)->ReleaseSub();
 		SAFE_DELETE(*scene);
 		childList_.clear();
-
-		Model::Rlease();
+		//ロードしたデータを全削除
+		Model::Release();
 		switch (nextSceneID_)
 		{
 		case SCENE_ID_TEST:
@@ -56,6 +59,10 @@ void SceneManager::Release()
 {
 }
 
+/// <summary>
+/// 指定したシーンをnextSceneID_に設定する（＝次のUpdateで）
+/// </summary>
+/// <param name="_next"></param>
 void SceneManager::ChangeScene(SCENE_ID _next)
 {
 	nextSceneID_ = _next;

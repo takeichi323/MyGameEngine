@@ -31,7 +31,11 @@ public:
 	void KillMe();
 	void SetPosition(XMFLOAT3 position);
 	void SetPosition(float x, float y, float z);
-	
+	GameObject* FindChildObject(string _objName);
+	GameObject* GetRootJob();
+	GameObject* FindObject(string _objName);
+//public:
+
 	template <class T>
 	GameObject* Instantiate(GameObject* parent)
 	{
