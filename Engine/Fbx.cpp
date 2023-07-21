@@ -3,9 +3,10 @@
 #include "Direct3D.h"
 #include "Texture.h"
 
-Fbx::Fbx():
+Fbx::Fbx()
+	:vertexCount_(0), polygonCount_(0), materialCount_(0),
 	pVertexBuffer_(nullptr), pIndexBuffer_(nullptr), pConstantBuffer_(nullptr),
-	vertexCount_(0), polygonCount_(0)
+	pMaterialList_(nullptr)
 {
 }
 

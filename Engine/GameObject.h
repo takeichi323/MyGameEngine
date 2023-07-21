@@ -3,9 +3,12 @@
 #include <list>
 #include "Transform.h"
 #include <string>
+#include "Direct3D.h"
 
 using std::string;
 using std::list;
+
+class SpherCollider;
 
 class GameObject
 {
@@ -14,7 +17,8 @@ protected:
 	list <GameObject*>             childList_;
 	Transform	                   transform_;
 	GameObject*                    pParent_;
-	std::string                    objectName_;
+	string	                     objectName_;
+	SpherCollider*               pCollider_;
 
 public:
 	GameObject();
@@ -34,8 +38,11 @@ public:
 	GameObject* FindChildObject(string _objName);
 	GameObject* GetRootJob();
 	GameObject* FindObject(string _objName);
-//public:
-
+	void AddColloder(SpherCollider* pCollider);
+	void Collision(GameObject* pTarget);
+	void RoundRobin(GameObject* pTarget);
+public:
+	//テンプレートの定義
 	template <class T>
 	GameObject* Instantiate(GameObject* parent)
 	{

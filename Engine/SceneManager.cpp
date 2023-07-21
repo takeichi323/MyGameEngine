@@ -44,11 +44,11 @@ void SceneManager::Update()
 			break;
 		
 		}
-
+		currentSceneID_ = nextSceneID_;
 	}
 	//現在のシーンの後片付け
 	//新しいシーンの準備
-	currentSceneID_ = nextSceneID_;
+
 }
 
 void SceneManager::Draw()
