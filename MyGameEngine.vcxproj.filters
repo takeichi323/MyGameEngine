@@ -60,6 +60,12 @@
     <ClCompile Include="Engine\SphereCollider.cpp">
       <Filter>ソース ファイル\Engine</Filter>
     </ClCompile>
+    <ClCompile Include="Stage.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\SceneManager.cpp">
+      <Filter>ソース ファイル\Engine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Simple3D.hlsl" />
@@ -110,6 +116,9 @@
     </ClInclude>
     <ClInclude Include="Engine\SphereCollider.h">
       <Filter>リソース ファイル\ヘッダー ファイル\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage.h">
+      <Filter>リソース ファイル\ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
