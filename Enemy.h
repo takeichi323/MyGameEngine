@@ -9,6 +9,9 @@ public:
 	//引数：parent  親オブジェクト（SceneManager）
 	Enemy(GameObject* parent);
 
+	//デストラクタ
+	~Enemy();
+
 	//初期化
 	void Initialize() override;
 

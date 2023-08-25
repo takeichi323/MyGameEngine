@@ -21,7 +21,7 @@ void GameObject::DrawSub()
 {
 	Draw();
 
-	RoundRobin(GetRootJob());
+	
 	for (auto itr = childList_.begin(); itr != childList_.end(); itr++)
 	{
 		(*itr)->DrawSub();
@@ -31,6 +31,7 @@ void GameObject::DrawSub()
 void GameObject::UpdateSub()
 {
 	Update();
+	RoundRobin(GetRootJob());
 
 	for (auto itr = childList_.begin(); itr != childList_.end(); itr++)
 	{
@@ -81,7 +82,7 @@ GameObject* GameObject::FindChildObject(string _objName)
 {
 	if (_objName == this->objectName_)
 	{
-		return(this); //自分が_objNameのオブジェクトだった！
+		return(this); //自分が_objNameのオブジェクト
 	}
 	else
 	{
@@ -110,8 +111,8 @@ GameObject* GameObject::GetRootJob()
 
 GameObject* GameObject::FindObject(string _objName)
 {
-	//考えてみて！
-	//自分から見て、ルートジョブを探して、そのルートジョブから全部の子をたどって_objNameを探す！
+	
+	//自分から見て、ルートジョブを探して、そのルートジョブから全部の子をたどって_objNameを探す
 	GameObject* rootJob = GetRootJob();
 	GameObject* result = rootJob->FindChildObject(_objName);
 	return(result);
@@ -124,7 +125,7 @@ void GameObject::AddColloder(SpherCollider* pCollider)
 
 void GameObject::Collision(GameObject* pTarget)
 {
-	if (pTarget->pParent_ = nullptr)
+	if (pTarget==this || pTarget->pCollider_==nullptr)
 		return;
 
 	/*XMVECTOR v{ transform_.position_.x - pTarget->transform_.position_.x,
@@ -132,9 +133,9 @@ void GameObject::Collision(GameObject* pTarget)
 			   transform_.position_.z - pTarget->transform_.position_.z,0 };*/
 
 	float dist = (transform_.position_.x - pTarget->transform_.position_.x) * (transform_.position_.x - pTarget->transform_.position_.x)
-		       + (transform_.position_.y - pTarget->transform_.position_.y) * (transform_.position_.y - pTarget->transform_.position_.y)
-		       + (transform_.position_.z - pTarget->transform_.position_.z) * (transform_.position_.z - pTarget->transform_.position_.z);
-	float rDist = (this->pCollider_->GetRadius() + pTarget->pCollider_->GetRadius()) * (this->pCollider_->GetRadius() + pTarget);
+		+ (transform_.position_.y - pTarget->transform_.position_.y) * (transform_.position_.y - pTarget->transform_.position_.y)
+		+ (transform_.position_.z - pTarget->transform_.position_.z) * (transform_.position_.z - pTarget->transform_.position_.z);
+	float rDist = (this->pCollider_->GetRadius() + pTarget->pCollider_->GetRadius()) * (this->pCollider_->GetRadius() + pTarget->pCollider_->GetRadius());
 
 
 

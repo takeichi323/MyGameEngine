@@ -6,13 +6,19 @@ Enemy::Enemy(GameObject* parent)
 {
 }
 
+
+Enemy::~Enemy()
+{
+}
+
+
 void Enemy::Initialize()
 {
 	pFbx = new Fbx;
 	pFbx->Load("Assets/odenn.fbx");
 	transform_.position_.z = 20.0f;
 
-	SphereCollider* col = new SphereCollider(1.0f);
+	SphereCollider* col = new SphereCollider(10.0f);
 	AddColloder(col);
 }
 
@@ -22,6 +28,7 @@ void Enemy::Update()
 
 void Enemy::Draw()
 {
+	pFbx->Draw(transform_);
 }
 
 void Enemy::Release()

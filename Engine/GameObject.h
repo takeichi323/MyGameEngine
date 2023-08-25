@@ -50,7 +50,7 @@ public:
 		pObject = new T(parent);
 		pObject->Initialize();
 		childList_.push_back(pObject);
-		return pObject;
+		return (pObject);
 	}
 };
 
