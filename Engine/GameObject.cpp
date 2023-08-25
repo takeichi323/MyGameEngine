@@ -135,7 +135,7 @@ void GameObject::Collision(GameObject* pTarget)
 	float dist = (transform_.position_.x - pTarget->transform_.position_.x) * (transform_.position_.x - pTarget->transform_.position_.x)
 		+ (transform_.position_.y - pTarget->transform_.position_.y) * (transform_.position_.y - pTarget->transform_.position_.y)
 		+ (transform_.position_.z - pTarget->transform_.position_.z) * (transform_.position_.z - pTarget->transform_.position_.z);
-	float rDist = (this->pCollider_->GetRadius() + pTarget->pCollider_->GetRadius()) * (this->pCollider_->GetRadius() + pTarget->pCollider_->GetRadius());
+	//float rDist = (this->pCollider_->GetRadius() + pTarget->pCollider_->GetRadius()) * (this->pCollider_->GetRadius() + pTarget->pCollider_->GetRadius());
 
 
 
@@ -145,11 +145,11 @@ void GameObject::Collision(GameObject* pTarget)
 	//もし、自分のコライダーとターゲットがぶつかっていたら
 	//onCollision(pTaeget)
 
-	if (dist <= rDist)
-	{
-		//onCollision()を呼ぶ
-		double p = 0;
-	}
+	//if (dist <= rDist)
+	//{
+	//	//onCollision()を呼ぶ
+	//	double p = 0;
+	//}
 }
 
 void GameObject::RoundRobin(GameObject* pTarget)
