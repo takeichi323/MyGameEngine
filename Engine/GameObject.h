@@ -1,31 +1,31 @@
 #pragma once
 
 #include <list>
-#include "Transform.h"
 #include <string>
+#include "Transform.h"
 #include "Direct3D.h"
 
 using std::string;
 using std::list;
 
-class SpherCollider;
+class SphereCollider;
 
 class GameObject
 {
-	bool IsDead;
+	bool isDead_;
 protected:
-	list <GameObject*>             childList_;
-	Transform	                   transform_;
-	GameObject*                    pParent_;
-	string	                     objectName_;
-	SpherCollider*               pCollider_;
+	list<GameObject*>	childList_;
+	Transform			transform_;
+	GameObject* pParent_;
+	string				objectName_; //オブジェクトの名前の文字列
+	SphereCollider* pCollider_;
 
 public:
 	GameObject();
 	GameObject(GameObject* parent, const std::string& name);
 	~GameObject();
 
-	virtual void Initialize() =0;
+	virtual void Initialize() = 0;
 	virtual void Update() = 0;
 	virtual void Draw() = 0;
 	virtual void Release() = 0;
@@ -38,9 +38,10 @@ public:
 	GameObject* FindChildObject(string _objName);
 	GameObject* GetRootJob();
 	GameObject* FindObject(string _objName);
-	void AddColloder(SpherCollider* pCollider);
+	void AddCollider(SphereCollider* pCollider);
 	void Collision(GameObject* pTarget);
 	void RoundRobin(GameObject* pTarget);
+
 public:
 	//テンプレートの定義
 	template <class T>
@@ -50,7 +51,6 @@ public:
 		pObject = new T(parent);
 		pObject->Initialize();
 		childList_.push_back(pObject);
-		return (pObject);
+		return(pObject);
 	}
 };
-
