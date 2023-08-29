@@ -5,7 +5,7 @@
 //コンストラクタ
 Controller::Controller(GameObject* parent)
     :GameObject(parent, "Controller")
-{
+{											        
     transform_.position_.x = 7.0f;
     transform_.position_.z = 7.0f;
 
