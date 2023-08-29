@@ -66,6 +66,12 @@
     <ClCompile Include="Engine\SceneManager.cpp">
       <Filter>ソース ファイル\Engine</Filter>
     </ClCompile>
+    <ClCompile Include="Model.cpp">
+      <Filter>ソース ファイル\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Controller.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Simple3D.hlsl" />
@@ -105,9 +111,6 @@
     <ClInclude Include="Engine\RootJob.h">
       <Filter>リソース ファイル\ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Model.h">
-      <Filter>リソース ファイル\ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="TestScene.h">
       <Filter>リソース ファイル\ヘッダー ファイル</Filter>
     </ClInclude>
@@ -118,6 +121,12 @@
       <Filter>リソース ファイル\ヘッダー ファイル\Engine</Filter>
     </ClInclude>
     <ClInclude Include="Stage.h">
+      <Filter>リソース ファイル\ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Model.h">
+      <Filter>リソース ファイル\ヘッダー ファイル\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Controller.h">
       <Filter>リソース ファイル\ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

@@ -2,26 +2,22 @@
 #include "Engine/Input.h"
 #include "Engine/SceneManager.h"
 #include "Stage.h"
+#include "Controller.h"
 
 TestScene::TestScene(GameObject* parent)
-	:GameObject(parent,"TestScene")
+	:GameObject(parent, "TestScene")
 {
 }
 
 void TestScene::Initialize()
 {
 	Instantiate<Stage>(this);
+	Instantiate<Controller>(this);
 }
 
 void TestScene::Update()
 {
 	
-	//GameObject* dbgTest = FindObject("SceneManager");
-	if (Input::IsKey(DIK_SPACE))
-    {
-		SceneManager* pSceneManager = (SceneManager *)FindObject("SceneManager");//ダウンキャスト
-		
-	}
 }
 
 void TestScene::Draw()
