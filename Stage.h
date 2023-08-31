@@ -1,11 +1,12 @@
 #pragma once
 #include "Engine/GameObject.h"
 
-const int MODEL_NUM = 5;
-const int XSIZE{ 15 };
-const int ZSIZE{ 15 };
+
 
 namespace {
+    const int MODEL_NUM = 5;
+    const int XSIZE{ 15 };
+    const int ZSIZE{ 15 };
     enum BLOCKTYPE
     {
         DEFAULT,BRICK,GRASS,SAND,WATER
@@ -20,11 +21,16 @@ namespace {
 class Stage : public GameObject
 {
     int hModel_[MODEL_NUM];    //モデル番号
-    int table_[XSIZE][ZSIZE];
+   // int table_[XSIZE][ZSIZE];
+    struct
+    {
+        int type;
+        int height;
+    } table_[15][15];
     
 public:
     void SetBlock(int _x, int _z, BLOCKTYPE _type);
-    void SetBlockHeght(int _x, int _z, int _height);
+    void SetBlockHeight(int _x, int _z, int _height);
     //コンストラクタ
     Stage(GameObject* parent);
 

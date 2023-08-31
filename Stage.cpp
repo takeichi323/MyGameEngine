@@ -3,15 +3,17 @@
 #include "Controller.h"
 
 
-void SetBlock(int _x, int _z, BLOCKTYPE _type)
+void Stage::SetBlock(int _x, int _z, BLOCKTYPE _type)
+{
+    table_[_x][_z].type = _type;
+}
+
+void Stage::SetBlockHeight(int _x, int _z, int _height)
 {
     table_[_x][_z].height = _height;
 }
 
-void SetBlockHeght(int _x, int _z, int _height)
-{
-    table_[_x][_z].height = _height;
-}
+
 
 //コンストラクタ
 Stage::Stage(GameObject* parent)
@@ -50,7 +52,8 @@ void Stage::Initialize()
     }
     for (int z = 0; z < ZSIZE; z++) {
         for (int x = 0; x < XSIZE; x++) {
-            table_[x][z] = x % 5;
+            SetBlock(x, z, (BLOCKTYPE)(z % 5));
+            SetBlockHeight(x, z, x % 5);
         }
     }
     /*table_[3][5] = GRASS;*/
@@ -70,13 +73,17 @@ void Stage::Draw()
     {
         for (int z = 0; z < 15; z++)
         {
-            
-            Transform trans;
-            trans.position_.x = x;
-            trans.position_.z = z;
-            Model::SetTransform(hModel_[(x+z)%5], trans);
-            Model::Draw(hModel_[(x + z) % 5]);
-
+            for (int y = 0; y < table_[x][z].height + 1; y++)
+            {
+                //table[x][z]からオブジェクトのタイプを取り出して書く！
+                int type = table_[x][z].type;
+                Transform trans;
+                trans.position_.x = x;
+                trans.position_.y = y;
+                trans.position_.z = z;
+                Model::SetTransform(hModel_[type], trans);
+                Model::Draw(hModel_[type]);
+            }
         }
     }
     
