@@ -290,29 +290,29 @@ void Fbx::Release()
 
 void Fbx::RayCast(RayCastData& rayData)
 {
-	for (int material = 0; material < materialCount_; material++)
-	{
-		for (int poly = 0; poly < indexCount_[material]/3; poly++)
-		{
-			ppIndex_[material][poly*3]//がmaterialのpoly*3番目のインデックス
-	          int i0=ppIndex_[material][poly*3+0]
-			  int i1=同じくpoly*3+1
-			  int i2=同じくpoly*3+2が各ポリゴンのインデックス
-				インデックスがわかったら　pVertices_[i0～i2]が3角形の頂点データ
-				.positionに位置情報が入ってる！
-			XMFLOAT3 v0 = ;
-			XMFLOAT3 v1 = ;
-			XMFLOAT3 v2 = ;
+	//for (int material = 0; material < materialCount_; material++)
+	//{
+	//	for (int poly = 0; poly < indexCount_[material]/3; poly++)
+	//	{
+	//		ppIndex_[material][poly*3]//がmaterialのpoly*3番目のインデックス
+	//          int i0=ppIndex_[material][poly*3+0]
+	//		  int i1=同じくpoly*3+1
+	//		  int i2=同じくpoly*3+2が各ポリゴンのインデックス
+	//			インデックスがわかったら　pVertices_[i0～i2]が3角形の頂点データ
+	//			.positionに位置情報が入ってる！
+	//		XMFLOAT3 v0 = ;
+	//		XMFLOAT3 v1 = ;
+	//		XMFLOAT3 v2 = ;
 
-			XMVECTOR start = rayData.start;
-			XMVECTOR dir = rayData.dir;
-			float dist;
-			rayData.hit = TriangleTest::Intesect(start,dir,v0,v1,v2,dist);
+	//		XMVECTOR start = rayData.start;
+	//		XMVECTOR dir = rayData.dir;
+	//		float dist;
+	//		rayData.hit = TriangleTest::Intesect(start,dir,v0,v1,v2,dist);
 
-			if (rayData.hit)
-			{
-				return;
-			}
-		}
-	}
+	//		if (rayData.hit)
+	//		{
+	//			return;
+	//		}
+	//	}
+	//}
 }
