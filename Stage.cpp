@@ -62,8 +62,36 @@ void Stage::Initialize()
 //更新
 void Stage::Update()
 {
+    float w = (float)(Direct3D::scrWidth/2);
+    float h = (float)(Direct3D::scrHeight / 2);
 
-}
+
+    XMMATRIX vp =
+    {
+        w ,0, 0, 0,
+        0, -h, 0, 0,
+        0, 0, 1, 0,
+        w, h ,0, 1
+
+
+    };
+    //ビューポート
+    XMMATRIX invVP =
+        //プロジェクション変換
+        XMMATRIX invProj =
+        //ビュー変換
+        XMMATRIX invView =
+        XMFLOAT3 mousePosFront =//マウスポジゲット;
+        mousePosFront.z = 0.0f;
+        XMFLOAT3 mousePosBack = ;
+        mousePosBack.z = 1.0f;
+        
+        /*①　mousePosFrontをベクトル変換
+        ②　①にinvVP,invPrj,invViewをかける
+        ③　mousePosBackをベクトルに変換
+        ④　③にinvVP,invPrj,invViewをかける
+        ⑤　②から④に向かってレイをうつ（とりあえずモデル番号はhModel_[0]）
+        ⑥　レイが当たったらブレークポイントで止める*/
 
 //描画
 void Stage::Draw()
