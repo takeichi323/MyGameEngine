@@ -2,6 +2,9 @@
 #include "Engine/Model.h"
 #include "Controller.h"
 #include"resource.h"
+#include"Engine/Camera.h"
+#include"Engine/Input.h"
+
 
 
 void Stage::SetBlock(int _x, int _z, BLOCKTYPE _type)
@@ -63,6 +66,9 @@ void Stage::Initialize()
 //更新
 void Stage::Update()
 {
+    if (!Input::IsMouseButtonDown(0)) {
+        return;
+    }
     float w = (float)(Direct3D::scrWidth/2);
     float h = (float)(Direct3D::scrHeight / 2);
 
@@ -76,47 +82,64 @@ void Stage::Update()
 
 
     };
-    //ビューポート
-    XMMATRIX invVP =
+         //ビューポート
+        XMMATRIX invVP = XMMatrixInverse(nullptr, vp);
         //プロジェクション変換
-        XMMATRIX invProj =
+        XMMATRIX invProj = XMMatrixInverse(nullptr,Camera::);
         //ビュー変換
-        XMMATRIX invView =
-        XMFLOAT3 mousePosFront =//マウスポジゲット;
+        XMMATRIX invView = XMMatrixInverse(nullptr, Camera::GetViewMatrix());
+        XMFLOAT3 mousePosFront = Input::GetMouseposition();//マウスポジゲット;
         mousePosFront.z = 0.0f;
-        XMFLOAT3 mousePosBack = ;
+        XMFLOAT3 mousePosBack = Input::GetMousePosition();
         mousePosBack.z = 1.0f;
         
-        /*①　mousePosFrontをベクトル変換
-        ②　①にinvVP,invPrj,invViewをかける
-        ③　mousePosBackをベクトルに変換
-        ④　③にinvVP,invPrj,invViewをかける
-        ⑤　②から④に向かってレイをうつ（とりあえずモデル番号はhModel_[0]）
-        ⑥　レイが当たったらブレークポイントで止める*/
-
-//描画
-void Stage::Draw()
-{
-    
+        //①　mousePosFrontをベクトル変換
+        XMVECTOR vMouseFront = XMLoadFloat3(&mousePosFront);
+        //②　①にinvVP,invPrj,invViewをかける
+        vMouseFront = XMVector3TransformCoord(vMouseFront, invVP* invProj* invView);
+        //③　mousePosBackをベクトルに変換
+        XMVECTOR vMouseBack = XMLoadFloat3(&mousePosBack);
+        //④　③にinvVP,invPrj,invViewをかける
+        vMouseBack = XMVector3TransformCoord(vMouseBack, invVP * invProj * invView);
+        
+       
+        
+  
     for (int x = 0; x < 15; x++)
     {
         for (int z = 0; z < 15; z++)
         {
             for (int y = 0; y < table_[x][z].height + 1; y++)
             {
+                //⑤　②から④に向かってレイをうつ（とりあえずモデル番号はhModel_[0]）
                 //table[x][z]からオブジェクトのタイプを取り出して書く！
-                int type = table_[x][z].type;
+                RayCastData data;
+                XMStoreFloat3(&data.start,vMouseFront );
+                XMStoreFloat3(&data.dir,vMouseBack-vMouseFront );
+
+                    Model::RayCast(hModel_[0], data);
+
+                //⑥　レイが当たったらブレークポイントで止める
+                if (data.hit)
+                {
+                    break;
+                }
+
+
+               /* int type = table_[x][z].type;
                 Transform trans;
                 trans.position_.x = x;
                 trans.position_.y = y;
                 trans.position_.z = z;
                 Model::SetTransform(hModel_[type], trans);
-                Model::Draw(hModel_[type]);
+                Model::Draw(hModel_[type]);*/
             }
         }
     }
-    
-}
+//void Stage::Draw()
+//{
+//
+//}
 
 //開放
 void Stage::Release()
