@@ -4,12 +4,10 @@
 #include "Engine/Direct3D.h"
 #include "Engine/Camera.h"
 #include "Engine/Input.h"
-#include"Engine/RootJob.h"
-#include"Engine/Model.h"
-#include"DirectXCollision.h"
+#include "Engine/RootJob.h"
+#include "Engine/Model.h"
+#include <DirectXCollision.h>
 
-#include"resource.h"
-#include"Stage.h"
 
 #pragma comment(lib, "winmm.lib")
 
@@ -18,25 +16,16 @@ const char* WIN_CLASS_NAME = "SampleGame";  //ウィンドウクラス名
 const int WINDOW_WIDTH = 800;  //ウィンドウの幅
 const int WINDOW_HEIGHT = 600; //ウィンドウの高さ
 
-RootJob* pRootJob=nullptr;
+RootJob* pRootJob = nullptr;
 
 //プロトタイプ宣言
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
-BOOL CALLBACK DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp);
+
+
 
 //エントリーポイント
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nCmdShow)
 {
-	XMVECTOR beginP = XMVectorSet(1, 5, 1,0);
-	XMVECTOR dirVec = XMVectorSet(0, -1, 0, 0);
-	XMVECTOR P1 = XMVectorSet(0, 0, 0, 0);
-	XMVECTOR P2 = XMVectorSet(0, 0, 3, 0);
-	XMVECTOR P3 = XMVectorSet(3, 0, 0, 0);
-	float dist;
-
-	bool result = TriangleTests::Intersects(beginP, dirVec, P1, P2, P3, dist);
-
-	int a;
 
 	//ウィンドウクラス（設計図）を作成
 	WNDCLASSEX wc;
@@ -86,20 +75,27 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 		PostQuitMessage(0); //エラー起きたら強制終了
 	}
 
-	
+	/////////////RayCast テストコード //////////
+	//Fbx* pFbx = new Fbx;
+	//pFbx->Load("Assets/BoxBrick.fbx");
+	//RayCastData data;
+	//data.start = XMFLOAT4(0, 5, 0, 0);
+	//data.dir = XMFLOAT4( 0, -1, 0, 0);
+	//  //ここで落ちとります。
+	//pFbx->RayCast(data);
+	//int a = 6;
+	//a++;
+	/////////////RayCast テストコード //////////
+
+	//カメラの初期化
 	Camera::Initialize();
+
+	//DirectInputの初期化
 	Input::Initialize(hWnd);
 
 	pRootJob = new RootJob(nullptr);
 	pRootJob->Initialize();
 
-
-	HWND hDlg = CreateDialog(hInstance, MAKEINTRESOURCE(IDD_DIALOG1), hWnd, (DLGPROC)DialogProc);
-
-
-
-
-	
 
 	//メッセージループ（何か起きるのを待つ）
 	MSG msg;
@@ -116,10 +112,9 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 		//メッセージなし
 		else
 		{
-			timeBeginPeriod(1);//timeGetTimeの精度をよくする
+			timeBeginPeriod(1);
 
 			static DWORD countFps = 0;
-
 			static DWORD startTime = timeGetTime();
 			DWORD nowTime = timeGetTime();
 			static DWORD lastUpdateTime = nowTime;
@@ -134,7 +129,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 				startTime = nowTime;
 			}
 
-			if ((nowTime - lastUpdateTime)*60 <= 1000)//整数にするために右辺と左辺に60掛ける
+			if ((nowTime - lastUpdateTime) * 60 <= 1000)
 			{
 				continue;
 			}
@@ -143,28 +138,33 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 
 			countFps++;
 
-			
+
+
 
 			timeEndPeriod(1);
-			//ゲームの処理
+
+			//▼ゲームの処理
+			//カメラの更新
 			Camera::Update();
 
+			//入力の処理
 			Input::Update();
 			pRootJob->UpdateSub();
-			
+
+			//▼描画
 			Direct3D::BeginDraw();
-			
-			//ルートジョブから、すべてのオブジェクトのDrawを呼ぶ
+
+			//ルートジョブから、すべてのオブジェクトのドローを呼ぶ
 			pRootJob->DrawSub();
-			pRootJob->Draw();
 
 			Direct3D::EndDraw();
-
 		}
 	}
+
 	Model::Release();
 	pRootJob->ReleaseSub();
 	SAFE_DELETE(pRootJob);
+
 	Input::Release();
 	Direct3D::Release();
 
@@ -176,16 +176,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	switch (msg)
 	{
+	case WM_MOUSEMOVE:
+		Input::SetMousePosition(LOWORD(lParam), HIWORD(lParam));
+		return 0;
 	case WM_DESTROY:
 		PostQuitMessage(0);  //プログラム終了
 		return 0;
 	}
 	return DefWindowProc(hWnd, msg, wParam, lParam);
-}
-
-//ダイアログプロシージャ
-BOOL CALLBACK DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
-{
-	Stage* pStage = (Stage*)pRootJob->FindObject("Stage");
-	return pStage->DialogProc(hDlg, msg, wp, lp);
 }
