@@ -1,5 +1,6 @@
 #include "Fbx.h"
 #include "Camera.h"
+#include<DirectXCollision.h>
 #include "Direct3D.h"
 #include "Texture.h"
 
@@ -290,29 +291,24 @@ void Fbx::Release()
 
 void Fbx::RayCast(RayCastData& rayData)
 {
-	//for (int material = 0; material < materialCount_; material++)
-	//{
-	//	for (int poly = 0; poly < indexCount_[material]/3; poly++)
-	//	{
-	//		ppIndex_[material][poly*3]//がmaterialのpoly*3番目のインデックス
-	//          int i0=ppIndex_[material][poly*3+0]
-	//		  int i1=同じくpoly*3+1
-	//		  int i2=同じくpoly*3+2が各ポリゴンのインデックス
-	//			インデックスがわかったら　pVertices_[i0～i2]が3角形の頂点データ
-	//			.positionに位置情報が入ってる！
-	//		XMFLOAT3 v0 = ;
-	//		XMFLOAT3 v1 = ;
-	//		XMFLOAT3 v2 = ;
+	for (int material = 0; material < materialCount_; material++)
+	{
+		for (int poly = 0; poly < indexCount_[material]/3; poly++)
+		{  
+			XMFLOAT3 vv0 = pVertices_[ppIndex_[material][poly*3+0]].position;
+			XMFLOAT3 vv1 = pVertices_[ppIndex_[material][poly * 3 + 1]].position;
+			XMFLOAT3 vv2 = pVertices_[ppIndex_[material][poly * 3 + 2]].position;
 
-	//		XMVECTOR start = rayData.start;
-	//		XMVECTOR dir = rayData.dir;
-	//		float dist;
-	//		rayData.hit = TriangleTest::Intesect(start,dir,v0,v1,v2,dist);
+			XMVECTOR start = XMLoadFloat4(&rayData.start);
+			XMVECTOR dir =XMLoadFloat4(&rayData.dir);
+			XMVECTOR dirN = XMVector4Normalize(dir);
+			float dist;
+			rayData.hit = TriangleTests::Intersects(start,dirN,vv0,vv1,vv2,rayData.dist);
 
-	//		if (rayData.hit)
-	//		{
-	//			return;
-	//		}
-	//	}
-	//}
+			if (rayData.hit)
+			{
+				return;
+			}
+		}
+	}
 }

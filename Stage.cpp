@@ -85,7 +85,7 @@ void Stage::Update()
          //ビューポート
         XMMATRIX invVP = XMMatrixInverse(nullptr, vp);
         //プロジェクション変換
-        XMMATRIX invProj = XMMatrixInverse(nullptr,Camera::);
+        XMMATRIX invProj = XMMatrixInverse(nullptr,Camera::GetProjectionMatrix);
         //ビュー変換
         XMMATRIX invView = XMMatrixInverse(nullptr, Camera::GetViewMatrix());
         XMFLOAT3 mousePosFront = Input::GetMouseposition();//マウスポジゲット;
@@ -114,14 +114,21 @@ void Stage::Update()
                 //⑤　②から④に向かってレイをうつ（とりあえずモデル番号はhModel_[0]）
                 //table[x][z]からオブジェクトのタイプを取り出して書く！
                 RayCastData data;
-                XMStoreFloat3(&data.start,vMouseFront );
-                XMStoreFloat3(&data.dir,vMouseBack-vMouseFront );
+                XMStoreFloat4(&data.start,vMouseFront );
+                XMStoreFloat4(& data.dir, vMouseBack - vMouseFront );
+                Transform trans;
+                trans.position_.x = x;
+                trans.position_.y = y;
+                trans.position_.z = z;
+                Model::RayCast(hModel_[0], data);
+
 
                     Model::RayCast(hModel_[0], data);
 
                 //⑥　レイが当たったらブレークポイントで止める
                 if (data.hit)
                 {
+                    table_[x][z].height++;
                     break;
                 }
 
