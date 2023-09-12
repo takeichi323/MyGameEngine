@@ -3,6 +3,7 @@
 #include "Engine/Input.h"
 #include "Engine/Camera.h"
 #include "Engine/Fbx.h"
+#include "resource.h"
 
 
 void Stage::SetBlock(int _x, int _z, BLOCKTYPE _type)
@@ -132,8 +133,8 @@ void Stage::Update()
 //描画
 void Stage::Draw()
 {
-	//Model::SetTransform(hModel_, transform_);
-	//Model::Draw(hModel_);
+	/*Model::SetTransform(hModel_, transform_);
+	Model::Draw(hModel_);*/
 
 	for (int x = 0; x < 15; x++)
 	{
@@ -158,3 +159,28 @@ void Stage::Draw()
 void Stage::Release()
 {
 }
+
+
+BOOL Stage::DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
+{
+	switch (msg)
+	{
+		//ダイアログができた
+	case WM_INITDIALOG:
+		//ラジオボタンの初期値
+		SendMessage(GetDlgItem(hDlg, IDC_RADIO_UP), BM_SETCHECK, BST_CHECKED, 0);
+
+		//コンボボックスの初期値
+		SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_ADDSTRING, 0, ((LPARAM)"デフォルト"));
+		SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_ADDSTRING, 0, ((LPARAM)"レンガ"));
+		SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_ADDSTRING, 0, ((LPARAM)"草原"));
+		SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_ADDSTRING, 0, ((LPARAM)"砂地"));
+		SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_ADDSTRING, 0, ((LPARAM)"水"));
+		SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_SETCURSEL, 0, 0);
+
+		return TRUE;
+
+	}
+	return FALSE;
+}
+
