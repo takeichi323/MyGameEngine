@@ -54,8 +54,10 @@ void Stage::Initialize()
 	//tableにブロックのタイプをセットしてやろう！
 	for (int z = 0; z < ZSIZE; z++) {
 		for (int x = 0; x < XSIZE; x++) {
-			SetBlock(x, z, (BLOCKTYPE)(0));
-			SetBlockHeight(x, z, 0);
+			for (int p = 0; p < 5; p++) {
+				SetBlock(x, z, (BLOCKTYPE)(p));
+				SetBlockHeight(x, z, 0);
+			}
 		}
 	}
 

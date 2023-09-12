@@ -21,6 +21,8 @@ struct  RayCastData
 	XMFLOAT4 dir;
 	bool hit;
 	float dist;
+	
+
 };
 
 class Fbx

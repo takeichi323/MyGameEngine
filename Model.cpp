@@ -28,7 +28,7 @@ int Model::Load(std::string fileName)
 		pData->pfbx_ = new Fbx;
 		pData->pfbx_->Load(fileName);
 	}
-
+	
 	modelList.push_back(pData);
 	return(modelList.size() - 1);
 }

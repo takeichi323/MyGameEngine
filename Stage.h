@@ -8,9 +8,14 @@ namespace {
     const int MODEL_NUM = 5;
     const int XSIZE{ 15 };
     const int ZSIZE{ 15 };
+
     enum BLOCKTYPE
     {
-        DEFAULT,BRICK,GRASS,SAND,WATER
+        DEFAULT,
+        BRICK,
+        GRASS,
+        SAND,
+        WATER
     };
 }
 

@@ -65,6 +65,27 @@ void Controller::Update()
     XMMATRIX mRotateX = XMMatrixRotationX(XMConvertToRadians(transform_.rotate_.x));
 
 
+//ƒJƒƒ‰‚Ì‚‚³iYŽ²j’²®
+    if (Input::IsKey(DIK_Q))
+    {
+        transform_.position_.y += 0.25f;
+        if (transform_.position_.y > 30)
+        {
+            transform_.position_.y = 30;
+        }
+       
+    }
+
+    if (Input::IsKey(DIK_E))
+    {
+        transform_.position_.y -= 0.25f;
+        if (transform_.position_.y < 0)
+        {
+            transform_.position_.y = 0;
+        }
+
+    }
+
 
 
 
