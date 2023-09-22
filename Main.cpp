@@ -7,9 +7,9 @@
 #include"Engine/RootJob.h"
 #include"Engine/Model.h"
 #include"DirectXCollision.h"
-
 #include"resource.h"
-#include"Stage.h"
+#include "Stage.h"
+
 
 #pragma comment(lib, "winmm.lib")
 
@@ -186,4 +186,7 @@ BOOL CALLBACK DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
 {
 	Stage* pStage = (Stage*)pRootJob->FindObject("Stage");
 	return pStage->DialogProc(hDlg, msg, wp, lp);
+
+	
+
 }

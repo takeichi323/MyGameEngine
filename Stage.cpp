@@ -4,6 +4,8 @@
 #include "Engine/Camera.h"
 #include "Engine/Fbx.h"
 #include "resource.h"
+#include <d3d11.h>
+#include <DirectXMath.h>
 
 
 void Stage::SetBlock(int _x, int _z, BLOCKTYPE _type)
@@ -118,6 +120,8 @@ void Stage::Update()
 
 				Model::RayCast(hModel_[0], data);
 
+
+
 				//⑥　レイが当たったらブレークポイントで止める
 				if (data.hit)
 				{
@@ -130,6 +134,30 @@ void Stage::Update()
 		}
 	}
 }
+
+
+//// レイの始点と方向を定義
+//DirectX::XMFLOAT3 rayOrigin = { 0.0f, 0.0f, 0.0f };
+//DirectX::XMFLOAT3 rayDirection = { 1.0f, 0.0f, 0.0f }; 
+//
+//// オブジェクトの境界ボックスを定義
+//DirectX::XMFLOAT3 objectMin = { -1.0f, -1.0f, -1.0f };
+//DirectX::XMFLOAT3 objectMax = { 1.0f, 1.0f, 1.0f };
+//
+//// レイの始点からオブジェクト境界ボックスまでの距離を計算
+//float tMinX = (objectMin.x - rayOrigin.x) / rayDirection.x;
+//float tMaxX = (objectMax.x - rayOrigin.x) / rayDirection.x;
+//
+//// レイがオブジェクトに当たったかを判定
+//bool hitObject = tMinX <= 1.0f && tMaxX >= 0.0f;
+
+// レイがオブジェクトに当たった場合に何かアクションを実行
+//if (hitObject) {
+//   // レイがオブジェクトに当たった場合の処理をここに記述
+//   // 例えば、レイを停止するか、何らかの反応を示すことができます。
+//   // この例では、単純にメッセージを表示しています。
+//   MessageBox(nullptr, L"レイがオブジェクトに当たりました！", L"Hit!", MB_OK);
+//}
 
 //描画
 void Stage::Draw()
@@ -164,6 +192,7 @@ void Stage::Release()
 
 BOOL Stage::DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
 {
+	
 	switch (msg)
 	{
 		//ダイアログができた
@@ -180,8 +209,20 @@ BOOL Stage::DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
 		SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_SETCURSEL, 0, 0);
 
 		return TRUE;
+	case 	WM_COMMAND:
+		switch (LOWORD(wp))
+		{
+		case IDC_RADIO_DOWN:
+			/*table_[x][z].height++;*/
+			break;
+		}
+
 
 	}
 	return FALSE;
+
+	
+	
+	
 }
 
