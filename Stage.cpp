@@ -235,7 +235,7 @@ void Stage::Save()
 		TEXT("すべてのファイル(*.*)\0*.*\0\0");     //─┘
 	ofn.lpstrFile = fileName;               	//ファイル名
 	ofn.nMaxFile = MAX_PATH;               	//パスの最大文字数
-	ofn.Flags = ●●●●●●●●●;   		//フラグ（同名ファイルが存在したら上書き確認）
+	ofn.Flags =OFN_OVERWRITEPROMPT ;   		//フラグ（同名ファイルが存在したら上書き確認）
 	ofn.lpstrDefExt = "map";                  	//デフォルト拡張子
 
 	//「ファイルを保存」ダイアログ
