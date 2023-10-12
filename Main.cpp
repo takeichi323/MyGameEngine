@@ -185,8 +185,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 			break;
 		case ID_MENU_OPEN:
 			OutputDebugString("開く");
-			((Stage*)pRootJob->FindChildObject("Stage"))->Load();
-			return 0;
+			break;
 		case ID_MENU_SAVE:
            //ファイル保存
 			OutputDebugString("保存");
