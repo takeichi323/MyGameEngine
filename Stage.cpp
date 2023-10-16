@@ -102,6 +102,10 @@ void Stage::Update()
 	//④　③にinvVP、invPrj、invViewをかける
 	vMouseBack = XMVector3TransformCoord(vMouseBack, invVP * invProj * invView);
 
+
+	int bufX = -1, bufZ;
+	float minDistance = 9999999;
+
 	for (int x = 0; x < 15; x++)
 	{
 		for (int z = 0; z < 15; z++)
@@ -125,15 +129,39 @@ void Stage::Update()
 				//⑥　レイが当たったらブレークポイントで止める
 				if (data.hit)
 				{
-					table_[x][z].height++;
-					break;
+					if (minDistance > data.dist)
+					{
+						minDistance = data.dist;
+						bufX = x;
+						bufZ = z;
+					}
 				}
 
 			}
 
 		}
 	}
+	if (bufX >= 0)
+	{
+		switch (mode_)
+		{
+		case 0:
+			table_[bufX][bufZ].height++;
+			break;
+		case 1:
+			if (table_[bufX][bufZ].height > 0)
+			{
+				table_[bufX][bufZ].height--;
+			}
+			break;
+		case 2:
+			table_[bufX][bufZ].type = select_;
+			break;
+		}
+	}
 }
+
+
 
 
 //// レイの始点と方向を定義
@@ -207,16 +235,27 @@ BOOL Stage::DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
 		SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_ADDSTRING, 0, ((LPARAM)"砂地"));
 		SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_ADDSTRING, 0, ((LPARAM)"水"));
 		SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_SETCURSEL, 0, 0);
-
 		return TRUE;
+
 	case 	WM_COMMAND:
 		switch (LOWORD(wp))
 		{
 		case IDC_RADIO_DOWN:
+			mode_ = -1;
 			/*table_[x][z].height++;*/
-			break;
-		}
+			return TRUE;
+		case IDC_RADIO_UP:
+			mode_ = 0;
+			return TRUE;
+		case IDC_RADIO_CHANGE:
+			mode_ = 2;
+			return TRUE;
 
+		case IDC_COMBO2:
+			select_ = (int)SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_GETCURSEL, 0, 0);
+			return TRUE;
+		}
+		return FALSE;
 
 	}
 	return FALSE;
@@ -244,6 +283,28 @@ void Stage::Save()
 
 	//キャンセルしたら中断
 	if (selFile == FALSE) return;
+
+	HANDLE hFile;
+	hFile = CreateFile(
+		fileName,    //ファイル名
+		GENERIC_WRITE,  //アクセスモード
+		0,
+		NULL,
+		CREATE_ALWAYS,     //作成方法
+		FILE_ATTRIBUTE_NORMAL,
+		NULL
+	);
+	std::string data = "";
+
+	DWORD bytes = 0;
+	WriteFile(
+		hFile,              //ファイルハンドル
+		"ABCDEF",          //保存したい文字列
+		12,                  //保存する文字数
+		&bytes,             //保存したサイズ
+		NULL
+	);
+   CloseHandle(hFile);
 }
 
 
