@@ -241,7 +241,7 @@ BOOL Stage::DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
 		switch (LOWORD(wp))
 		{
 		case IDC_RADIO_DOWN:
-			mode_ = -1;
+			mode_ = 1;
 			/*table_[x][z].height++;*/
 			return TRUE;
 		case IDC_RADIO_UP:
