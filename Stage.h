@@ -36,6 +36,8 @@ class Stage : public GameObject
     
     int mode_;     //0:ã‚°‚é@‚P:‰º‚°‚é@‚QFí—Ş‚ğ•Ï‚¦‚é
     int select_;  //í—Ş
+    int max_;  //”{—¦•ÏX@i‰¼j0:‚Q”{@‚P:‚R”{@‚QF‚T”{
+
 
 public:
     void SetBlock(int _x, int _z, BLOCKTYPE _type);

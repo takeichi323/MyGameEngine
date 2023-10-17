@@ -157,9 +157,18 @@ void Stage::Update()
 		case 2:
 			table_[bufX][bufZ].type = select_;
 			break;
+		/*case 3:
+			for (int i = 1; i < 3; i++) {
+				for (int n = 1; n < 3; n++) {
+					table_[bufX][bufZ].height++;
+					break;
+				}
+			}*/
 		}
+			
 	}
 }
+
 
 
 
@@ -240,13 +249,15 @@ BOOL Stage::DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
 	case 	WM_COMMAND:
 		switch (LOWORD(wp))
 		{
+		case IDC_RADIO_UP:
+			mode_ = 0;
+			return TRUE;
+
 		case IDC_RADIO_DOWN:
 			mode_ = 1;
 			/*table_[x][z].height++;*/
 			return TRUE;
-		case IDC_RADIO_UP:
-			mode_ = 0;
-			return TRUE;
+
 		case IDC_RADIO_CHANGE:
 			mode_ = 2;
 			return TRUE;
