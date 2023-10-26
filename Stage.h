@@ -36,7 +36,7 @@ class Stage : public GameObject
     
     int mode_;     //0:上げる　１:下げる　２：種類を変える
     int select_;  //種類
-    int max_;  //倍率変更　（仮）0:２倍　１:３倍　２：５倍
+    int push_;  //クリックor長押し
 
 
 public:

@@ -208,7 +208,7 @@ void Stage::Draw()
 		{
 			for (int y = 0; y < table_[x][z].height + 1; y++)
 			{
-				//table[x][z]からオブジェクトのタイプを取り出して書く！
+				//table[x][z]からオブジェクトのタイプを取り出して書く
 				int type = table_[x][z].type;
 				Transform trans;
 				trans.position_.x = x;
@@ -244,6 +244,10 @@ BOOL Stage::DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
 		SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_ADDSTRING, 0, ((LPARAM)"砂地"));
 		SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_ADDSTRING, 0, ((LPARAM)"水"));
 		SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_SETCURSEL, 0, 0);
+		SendMessage(GetDlgItem(hDlg, IDC_COMBO1), CB_ADDSTRING, 0, ((LPARAM)"1クリック"));
+		SendMessage(GetDlgItem(hDlg, IDC_COMBO1), CB_ADDSTRING, 0, ((LPARAM)"長押し"));
+		SendMessage(GetDlgItem(hDlg, IDC_COMBO1), CB_SETCURSEL, 0, 0);
+
 		return TRUE;
 
 	case 	WM_COMMAND:
@@ -265,6 +269,9 @@ BOOL Stage::DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
 		case IDC_COMBO2:
 			select_ = (int)SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_GETCURSEL, 0, 0);
 			return TRUE;
+
+		case IDC_COMBO1:
+			push_ = (int)SendMessage(GetDlgItem(hDlg, IDC_COMBO1), CB_GETCURSEL, 0, 0);
 		}
 		return FALSE;
 
