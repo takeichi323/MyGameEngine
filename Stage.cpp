@@ -67,6 +67,9 @@ void Stage::Initialize()
 //更新
 void Stage::Update()
 {
+	
+
+
 	if (!Input::IsMouseButtonDown(0)) {
 		return;
 	}
@@ -167,34 +170,27 @@ void Stage::Update()
 		}
 			
 	}
+
+	//if (Input::IsMouseButtonDown(0)) {
+	//	if (!isMouseButtonDown_) {
+	//		// マウスボタンが長押しを開始したときの処理
+	//		isMouseButtonDown_ = true;
+	//	}
+	//	// マウスボタンが長押し中の処理
+	//	table_[bufX][bufZ].height++;
+
+	//}
+	//else {
+	//	// マウスボタンが離されたときの処理
+	//	isMouseButtonDown_ = false;
+	//}
 }
 
 
 
 
 
-//// レイの始点と方向を定義
-//DirectX::XMFLOAT3 rayOrigin = { 0.0f, 0.0f, 0.0f };
-//DirectX::XMFLOAT3 rayDirection = { 1.0f, 0.0f, 0.0f }; 
-//
-//// オブジェクトの境界ボックスを定義
-//DirectX::XMFLOAT3 objectMin = { -1.0f, -1.0f, -1.0f };
-//DirectX::XMFLOAT3 objectMax = { 1.0f, 1.0f, 1.0f };
-//
-//// レイの始点からオブジェクト境界ボックスまでの距離を計算
-//float tMinX = (objectMin.x - rayOrigin.x) / rayDirection.x;
-//float tMaxX = (objectMax.x - rayOrigin.x) / rayDirection.x;
-//
-//// レイがオブジェクトに当たったかを判定
-//bool hitObject = tMinX <= 1.0f && tMaxX >= 0.0f;
 
-// レイがオブジェクトに当たった場合に何かアクションを実行
-//if (hitObject) {
-//   // レイがオブジェクトに当たった場合の処理をここに記述
-//   // 例えば、レイを停止するか、何らかの反応を示すことができます。
-//   // この例では、単純にメッセージを表示しています。
-//   MessageBox(nullptr, L"レイがオブジェクトに当たりました！", L"Hit!", MB_OK);
-//}
 
 //描画
 void Stage::Draw()

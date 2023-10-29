@@ -63,4 +63,5 @@ public:
 
     void Save() ;
     void Load();
+    bool isMouseButtonDown_;
 };
