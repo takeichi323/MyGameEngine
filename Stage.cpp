@@ -373,4 +373,21 @@ void Stage::Load()
 	CloseHandle(hFileld);
 }
 
+/*リセットボタンアルゴリズム
+１．新しく初期ブロックの配置をおいておく関数を作っておく
+例）void Stage::ResetToInitialState() {
+for (int z = 0; z < ZSIZE; z++) {
+	for (int x = 0; x < XSIZE; x++) {
+		SetBlock(x, z, DEFAULT);
+		SetBlockHeight(x, z, 0);
+	}
+}
+}
+２．ダイアログのボタンを作って他のと同じようにケース文でくくる
+３．ケース文の中に作った関数を呼び出してできるはず
+case IDC_BUTTON_RESET:
+	ResetToInitialState(); // ボタンが押されたら初期のオブジェクト配置に戻る
+	return TRUE;
+*/
+
 
