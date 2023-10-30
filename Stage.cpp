@@ -68,6 +68,7 @@ void Stage::Initialize()
 void Stage::Update()
 {
 	
+	
 
 
 	if (!Input::IsMouseButtonDown(0)) {
@@ -76,7 +77,8 @@ void Stage::Update()
 	float w = (float)(Direct3D::scrWidth / 2.0f);
 	float h = (float)(Direct3D::scrHeight / 2.0f);
 	//Offsetx,y は0
-	//minZ =0 maxZ = 1
+	//minZ =0 maxZ = 1*/
+
 
 	XMMATRIX vp =
 	{
@@ -160,30 +162,12 @@ void Stage::Update()
 		case 2:
 			table_[bufX][bufZ].type = select_;
 			break;
-		/*case 3:
-			for (int i = 1; i < 3; i++) {
-				for (int n = 1; n < 3; n++) {
-					table_[bufX][bufZ].height++;
-					break;
-				}
-			}*/
+	
 		}
 			
 	}
 
-	//if (Input::IsMouseButtonDown(0)) {
-	//	if (!isMouseButtonDown_) {
-	//		// マウスボタンが長押しを開始したときの処理
-	//		isMouseButtonDown_ = true;
-	//	}
-	//	// マウスボタンが長押し中の処理
-	//	table_[bufX][bufZ].height++;
-
-	//}
-	//else {
-	//	// マウスボタンが離されたときの処理
-	//	isMouseButtonDown_ = false;
-	//}
+	
 }
 
 
@@ -266,8 +250,10 @@ BOOL Stage::DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
 			select_ = (int)SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_GETCURSEL, 0, 0);
 			return TRUE;
 
-		case IDC_COMBO1:
-			push_ = (int)SendMessage(GetDlgItem(hDlg, IDC_COMBO1), CB_GETCURSEL, 0, 0);
+		/*case IDC_COMBO1:*/
+			/*mode_ = 3;*/
+			
+
 		case IDC_BUTTON2://リセットボタン
 			ResetStage();
 			return TRUE;
@@ -385,6 +371,28 @@ void Stage::ResetStage()
 		}
 	}
 }
+
+void Stage::ButtonChange()
+{
+	//if (Input::IsMouseButtonDown(0)) {
+	//	if (!isMouseButtonDown_) {
+	//		// マウスボタンが長押しを開始したときの処理
+	//		isMouseButtonDown_ = true;
+	//	}
+	//	// マウスボタンが長押し中の処理
+	//	table_[bufX][bufZ].height++;
+	//}
+	//else {
+	//	// マウスボタンが離されたときの処理
+	//	isMouseButtonDown_ = false;
+	//}
+
+	//1.1クリックが選択されてマウスを押したら1つずつ出す
+	//  デフォルトは１クリック
+	//2.長押しを選択されてマウスを押し続けたらずっと出る
+}
+
+
 
 /*リセットボタンアルゴリズム
 １．新しく初期ブロックの配置をおいておく関数を作っておく
