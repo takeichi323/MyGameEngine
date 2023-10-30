@@ -268,6 +268,9 @@ BOOL Stage::DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
 
 		case IDC_COMBO1:
 			push_ = (int)SendMessage(GetDlgItem(hDlg, IDC_COMBO1), CB_GETCURSEL, 0, 0);
+		case IDC_BUTTON2://リセットボタン
+			ResetStage();
+			return TRUE;
 		}
 		return FALSE;
 
@@ -373,21 +376,20 @@ void Stage::Load()
 	CloseHandle(hFileld);
 }
 
-/*リセットボタンアルゴリズム
-１．新しく初期ブロックの配置をおいておく関数を作っておく
-例）void Stage::ResetToInitialState() {
-for (int z = 0; z < ZSIZE; z++) {
-	for (int x = 0; x < XSIZE; x++) {
-		SetBlock(x, z, DEFAULT);
-		SetBlockHeight(x, z, 0);
+void Stage::ResetStage()
+{
+	for (int z = 0; z < ZSIZE; z++) {
+		for (int x = 0; x < XSIZE; x++) {
+			SetBlock(x, z, DEFAULT);
+			SetBlockHeight(x, z, 0);
+		}
 	}
 }
-}
+
+/*リセットボタンアルゴリズム
+１．新しく初期ブロックの配置をおいておく関数を作っておく
 ２．ダイアログのボタンを作って他のと同じようにケース文でくくる
 ３．ケース文の中に作った関数を呼び出してできるはず
-case IDC_BUTTON_RESET:
-	ResetToInitialState(); // ボタンが押されたら初期のオブジェクト配置に戻る
-	return TRUE;
 */
 
 
