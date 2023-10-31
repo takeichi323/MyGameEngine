@@ -36,7 +36,8 @@ class Stage : public GameObject
     
     int mode_;     //0:上げる　１:下げる　２：種類を変える
     int select_;  //種類
-    int push_;  //クリックor長押し
+    bool push_;  //クリックor長押し
+    int bufX = -1, bufZ;
 
 
 public:
@@ -65,5 +66,5 @@ public:
     void Load();
     void ResetStage();
     void ButtonChange();
-    bool isMouseButtonDown_;
+   
 };

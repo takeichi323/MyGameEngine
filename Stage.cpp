@@ -108,7 +108,7 @@ void Stage::Update()
 	vMouseBack = XMVector3TransformCoord(vMouseBack, invVP * invProj * invView);
 
 
-	int bufX = -1, bufZ;
+	
 	float minDistance = 9999999;
 
 	for (int x = 0; x < 15; x++)
@@ -170,6 +170,26 @@ void Stage::Update()
 	
 }
 
+void Stage::ButtonChange()
+{
+	if (Input::IsMouseButtonDown(0)) {
+		if (!push_) {
+			// マウスボタンが長押しを開始したときの処理
+			push_ = true;
+		}
+		// マウスボタンが長押し中の処理
+		table_[bufX][bufZ].height++;
+	}
+	else {
+		// マウスボタンが離されたときの処理
+		push_ = false;
+	}
+
+	//1.1クリックが選択されてマウスを押したら1つずつ出す
+	//  デフォルトは１クリック
+	//2.長押しを選択されてマウスを押し続けたらずっと出る
+}
+
 
 
 
@@ -223,10 +243,9 @@ BOOL Stage::DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
 		SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_ADDSTRING, 0, ((LPARAM)"草原"));
 		SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_ADDSTRING, 0, ((LPARAM)"砂地"));
 		SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_ADDSTRING, 0, ((LPARAM)"水"));
-		SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_SETCURSEL, 0, 0);
-		SendMessage(GetDlgItem(hDlg, IDC_COMBO1), CB_ADDSTRING, 0, ((LPARAM)"1クリック"));
-		SendMessage(GetDlgItem(hDlg, IDC_COMBO1), CB_ADDSTRING, 0, ((LPARAM)"長押し"));
-		SendMessage(GetDlgItem(hDlg, IDC_COMBO1), CB_SETCURSEL, 0, 0);
+		SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_SETCURSEL, 0, 0); 
+		//チェックボックスの初期化
+		SendMessage(GetDlgItem(hDlg, IDC_CHECK1), BM_SETCHECK, BST_UNCHECKED, 0);
 
 		return TRUE;
 
@@ -250,8 +269,10 @@ BOOL Stage::DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
 			select_ = (int)SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_GETCURSEL, 0, 0);
 			return TRUE;
 
-		/*case IDC_COMBO1:*/
-			/*mode_ = 3;*/
+		case IDC_CHECK1:
+			ButtonChange();
+			/*push_ = (int)SendMessage(GetDlgItem(hDlg, IDC_CHECK1), CB_ADDSTRING, 0, 0);*/
+			return TRUE;
 			
 
 		case IDC_BUTTON2://リセットボタン
@@ -372,25 +393,7 @@ void Stage::ResetStage()
 	}
 }
 
-void Stage::ButtonChange()
-{
-	//if (Input::IsMouseButtonDown(0)) {
-	//	if (!isMouseButtonDown_) {
-	//		// マウスボタンが長押しを開始したときの処理
-	//		isMouseButtonDown_ = true;
-	//	}
-	//	// マウスボタンが長押し中の処理
-	//	table_[bufX][bufZ].height++;
-	//}
-	//else {
-	//	// マウスボタンが離されたときの処理
-	//	isMouseButtonDown_ = false;
-	//}
 
-	//1.1クリックが選択されてマウスを押したら1つずつ出す
-	//  デフォルトは１クリック
-	//2.長押しを選択されてマウスを押し続けたらずっと出る
-}
 
 
 
