@@ -6,7 +6,9 @@
 #include "resource.h"
 #include <d3d11.h>
 #include <DirectXMath.h>
+#include <stack>
 
+std::stack<std::vector<std::vector<Stage::BlockState>>> stageHistory;
 
 void Stage::SetBlock(int _x, int _z, BLOCKTYPE _type)
 {
@@ -17,6 +19,8 @@ void Stage::SetBlockHeight(int _x, int _z, int _height)
 {
 	table_[_x][_z].height = _height;
 }
+
+
 
 //コンストラクタ
 Stage::Stage(GameObject* parent)
@@ -391,6 +395,34 @@ void Stage::ResetStage()
 		}
 	}
 }
+void Stage::SaveState()
+{
+	std::vector<std::vector<BlockState>> currentState;
+	for (int z = 0; z < ZSIZE; z++) {
+		std::vector<BlockState> row;
+		for (int x = 0; x < XSIZE; x++) {
+			row.push_back(table_[x][z]);
+		}
+		currentState.push_back(row);
+	}
+	stageHistory.push(currentState);
+}
+
+void Stage::LoadState()
+{
+	if (!stageHistory.empty()) {
+		std::vector<std::vector<BlockState>> previousState = stageHistory.top();
+		stageHistory.pop();
+
+		for (int z = 0; z < ZSIZE; z++) {
+			for (int x = 0; x < XSIZE; x++) {
+				table_[x][z] = previousState[z][x];
+			}
+		}
+	}
+}
+
+
 
 
 

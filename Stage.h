@@ -33,7 +33,10 @@ class Stage : public GameObject
         int type;
         int height;
     } table_[15][15];
+
+
     
+
     int mode_;     //0:上げる　１:下げる　２：種類を変える
     int select_;  //種類
     bool push_;  //クリックor長押し
@@ -41,6 +44,13 @@ class Stage : public GameObject
 
 
 public:
+    struct BlockState {
+        BLOCKTYPE type;
+        int height;
+    };
+
+  
+
     void SetBlock(int _x, int _z, BLOCKTYPE _type);
     void SetBlockHeight(int _x, int _z, int _height);
     //コンストラクタ
@@ -65,6 +75,9 @@ public:
     void Save() ;
     void Load();
     void ResetStage();
+    void SaveState();
+    void LoadState();
+    void Undo();
     void ButtonChange();
    
 };
