@@ -4,6 +4,7 @@
 
 
 
+
 namespace {
     const int MODEL_NUM = 5;
     const int XSIZE{ 15 };
@@ -32,7 +33,9 @@ class Stage : public GameObject
     {
         int type;
         int height;
-    } table_[15][15];
+    } table_[XSIZE][ZSIZE];
+
+   
 
 
     
@@ -47,6 +50,12 @@ public:
     struct BlockState {
         BLOCKTYPE type;
         int height;
+
+        // コピーコンストラクタを追加
+        BlockState(const BlockState& other) {
+            type = other.type;
+            height = other.height;
+        }
     };
 
   
@@ -75,9 +84,9 @@ public:
     void Save() ;
     void Load();
     void ResetStage();
-    void SaveState();
-    void LoadState();
+    void SaveToHistory();
     void Undo();
     void ButtonChange();
    
 };
+

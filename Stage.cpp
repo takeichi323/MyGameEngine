@@ -395,32 +395,38 @@ void Stage::ResetStage()
 		}
 	}
 }
-void Stage::SaveState()
+
+// ステージの現在の状態を履歴スタックに保存するための関数
+void Stage::SaveToHistory()
 {
 	std::vector<std::vector<BlockState>> currentState;
 	for (int z = 0; z < ZSIZE; z++) {
 		std::vector<BlockState> row;
 		for (int x = 0; x < XSIZE; x++) {
-			row.push_back(table_[x][z]);
+			row.push_back({ table_[x][z].type, table_[x][z].height });
 		}
 		currentState.push_back(row);
 	}
 	stageHistory.push(currentState);
 }
 
-void Stage::LoadState()
+// ステージ上の最後の変更を取り消すための関数
+void Stage::Undo()
 {
 	if (!stageHistory.empty()) {
 		std::vector<std::vector<BlockState>> previousState = stageHistory.top();
-		stageHistory.pop();
-
 		for (int z = 0; z < ZSIZE; z++) {
 			for (int x = 0; x < XSIZE; x++) {
-				table_[x][z] = previousState[z][x];
+				table_[x][z].type = previousState[z][x].type;
+				table_[x][z].height = previousState[z][x].height;
 			}
 		}
+		stageHistory.pop();
 	}
 }
+
+
+
 
 
 
