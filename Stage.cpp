@@ -9,7 +9,8 @@
 #include <stack>
 
 std::stack<std::vector<std::vector<Stage::BlockState>>> stageHistory;
-
+// ステージの状態を保存するためのスタック
+std::stack<Stage> stageStateStack;
 void Stage::SetBlock(int _x, int _z, BLOCKTYPE _type)
 {
 	table_[_x][_z].type = _type;
@@ -281,6 +282,11 @@ BOOL Stage::DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
 		case IDC_BUTTON2://リセットボタン
 			ResetStage();
 			return TRUE;
+
+		case IDC_BUTTON3:
+			RestoreStageState();
+			return TRUE;
+
 		}
 		return FALSE;
 
@@ -396,19 +402,40 @@ void Stage::ResetStage()
 	}
 }
 
-// ステージの現在の状態を履歴スタックに保存するための関数
-void Stage::SaveToHistory()
+bool Stage::RestoreStageState()
 {
+	if (!stageStateStack.empty()) {
+		Stage currentState = stageStateStack.top();
+		// ステージの状態を currentState に復元する処理をここに追加
+		stageStateStack.pop();
+		return true;
+	}
+	return false; // スタックが空の場合
+}
+
+// ステージの現在の状態を履歴スタックに保存するための関数
+void SaveStageState(const Stage& state) {
+	
+	stageStateStack.push(state);
+
+}
+
+
+// ステージの現在の状態を履歴スタックに保存するための関数
+/*void Stage::SaveStateToHistory() {
 	std::vector<std::vector<BlockState>> currentState;
 	for (int z = 0; z < ZSIZE; z++) {
 		std::vector<BlockState> row;
 		for (int x = 0; x < XSIZE; x++) {
-			row.push_back({ table_[x][z].type, table_[x][z].height });
+		
+			row.push_back(table_[x][z]);
 		}
 		currentState.push_back(row);
 	}
 	stageHistory.push(currentState);
-}
+}*/
+
+
 
 // ステージ上の最後の変更を取り消すための関数
 void Stage::Undo()

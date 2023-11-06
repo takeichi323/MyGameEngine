@@ -57,7 +57,8 @@ public:
             height = other.height;
         }
     };
-
+   
+  
   
 
     void SetBlock(int _x, int _z, BLOCKTYPE _type);
@@ -84,7 +85,8 @@ public:
     void Save() ;
     void Load();
     void ResetStage();
-    void SaveToHistory();
+    bool RestoreStageState();
+    void SaveStateToHistory();
     void Undo();
     void ButtonChange();
    
